@@ -1,0 +1,40 @@
+logs:
+  - name: root
+    level: info
+    formatter: '%d%T%m%n'
+    appenders: 
+      - type: FileAppender
+        file: ./log.txt
+      - type: StdoutAppender
+  - name: system
+    level: debug
+    formatter: "%d%T%m%n"
+    appenders:
+      - type: FileAppender
+        file: ./log.txt
+      - type: StdoutAppender
+system:
+  port: 1010
+  value: 15
+  vec: [10,30]
+  list: [12,34,56]
+  set: [1,2,3,3,4]
+  map: 
+    k1: 10
+    k2: 20
+    k3: 31
+class:
+  person:
+      name: sylar
+      age: 30
+      sex: true
+  vec_person:
+      - name: sylar1
+        age: 31
+        sex: true
+      - name: sylar2
+        age: 311
+        sex: false
+      - name: sylar3
+        age: 313
+        sex: true

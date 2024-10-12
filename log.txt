@@ -1,0 +1,489 @@
+2024-09-24 10:15:04	after 1010
+2024-09-24 10:15:04	after 15
+2024-09-24 10:15:04	after int_vec 10
+2024-09-24 10:15:04	after int_vec 30
+2024-09-24 10:15:04	after int_vec yaml:  - 10
+- 30
+2024-09-24 10:15:04	after int_list 12
+2024-09-24 10:15:04	after int_list 34
+2024-09-24 10:15:04	after int_list 56
+2024-09-24 10:15:04	after int_list yaml:  - 12
+- 34
+- 56
+2024-09-24 10:15:04	after int_list 1
+2024-09-24 10:15:04	after int_list 2
+2024-09-24 10:15:04	after int_list 3
+2024-09-24 10:15:04	after int_list 4
+2024-09-24 10:15:04	after int_list yaml:  - 1
+- 2
+- 3
+- 4
+2024-09-24 10:15:04	after int_map {k1 : 10 } 
+2024-09-24 10:15:04	after int_map {k2 : 20 } 
+2024-09-24 10:15:04	after int_map {k3 : 31 } 
+2024-09-24 10:15:04	after int_map yaml:  k1: 10
+k2: 20
+k3: 31
+2024-09-24 10:15:04	 before [ person:  name=  age= 0 sex= 0]
+2024-09-24 10:15:04	 before  yaml:  
+2024-09-24 10:15:04	 size = 0
+2024-09-24 10:15:04	old = [ person:  name=  age= 0 sex= 0], new = [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 10:15:04	 after [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 10:15:04	 after [ person:  name= sylar1 age= 31 sex= 1]
+2024-09-24 10:15:04	 after [ person:  name= sylar2 age= 311 sex= 0]
+2024-09-24 10:15:04	 after [ person:  name= sylar3 age= 313 sex= 1]
+2024-09-24 10:15:04	 after  yaml:  - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+2024-09-24 10:15:04	 size = 3
+2024-09-24 10:15:04	name: class.person, description: person, typename: 6Person, value: name: sylar
+age: 30
+sex: true
+
+2024-09-24 10:15:04	name: class.vec_person, description: vec_person, typename: St6vectorI6PersonSaIS0_EE, value: - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+
+2024-09-24 10:15:04	name: fiber.stack_size, description: fiber stack size, typename: j, value: 1048576
+
+2024-09-24 10:15:04	name: logs, description: logs config, typename: St3setIN5sylar9LogDefineESt4lessIS1_ESaIS1_EE, value: - name: root
+  level: INFO
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+- name: system
+  level: DEBUG
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+
+2024-09-24 10:15:04	name: system.list, description: system list, typename: NSt7__cxx114listIiSaIiEEE, value: - 12
+- 34
+- 56
+
+2024-09-24 10:15:04	name: system.map, description: system map, typename: St3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE, value: k1: 10
+k2: 20
+k3: 31
+
+2024-09-24 10:15:04	name: system.port, description: system port, typename: i, value: 1010
+
+2024-09-24 10:15:04	name: system.set, description: system set, typename: St3setIiSt4lessIiESaIiEE, value: - 1
+- 2
+- 3
+- 4
+
+2024-09-24 10:15:04	name: system.value, description: system value, typename: d, value: 15
+
+2024-09-24 10:15:04	name: system.vec, description: system vec, typename: St6vectorIiSaIiEE, value: - 10
+- 30
+
+2024-09-24 10:15:04	hello system
+2024-09-24 10:15:04	hello system
+2024-09-24 10:34:27	on_logger_conf_change
+2024-09-24 10:34:27	on_logger_conf_change
+2024-09-24 10:34:27	after 1010
+2024-09-24 10:34:27	after 15
+2024-09-24 10:34:27	after int_vec 10
+2024-09-24 10:34:27	after int_vec 30
+2024-09-24 10:34:27	after int_vec yaml:  - 10
+- 30
+2024-09-24 10:34:27	after int_list 12
+2024-09-24 10:34:27	after int_list 34
+2024-09-24 10:34:27	after int_list 56
+2024-09-24 10:34:27	after int_list yaml:  - 12
+- 34
+- 56
+2024-09-24 10:34:27	after int_list 1
+2024-09-24 10:34:27	after int_list 2
+2024-09-24 10:34:27	after int_list 3
+2024-09-24 10:34:27	after int_list 4
+2024-09-24 10:34:27	after int_list yaml:  - 1
+- 2
+- 3
+- 4
+2024-09-24 10:34:27	after int_map {k1 : 10 } 
+2024-09-24 10:34:27	after int_map {k2 : 20 } 
+2024-09-24 10:34:27	after int_map {k3 : 31 } 
+2024-09-24 10:34:27	after int_map yaml:  k1: 10
+k2: 20
+k3: 31
+2024-09-24 10:34:27	 before [ person:  name=  age= 0 sex= 0]
+2024-09-24 10:34:27	 before  yaml:  
+2024-09-24 10:34:27	 size = 0
+2024-09-24 10:34:27	old = [ person:  name=  age= 0 sex= 0], new = [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 10:34:27	 after [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 10:34:27	 after [ person:  name= sylar1 age= 31 sex= 1]
+2024-09-24 10:34:27	 after [ person:  name= sylar2 age= 311 sex= 0]
+2024-09-24 10:34:27	 after [ person:  name= sylar3 age= 313 sex= 1]
+2024-09-24 10:34:27	 after  yaml:  - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+2024-09-24 10:34:27	 size = 3
+2024-09-24 10:34:27	name: class.person, description: person, typename: 6Person, value: name: sylar
+age: 30
+sex: true
+
+2024-09-24 10:34:27	name: class.vec_person, description: vec_person, typename: St6vectorI6PersonSaIS0_EE, value: - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+
+2024-09-24 10:34:27	name: fiber.stack_size, description: fiber stack size, typename: j, value: 1048576
+
+2024-09-24 10:34:27	name: logs, description: logs config, typename: St3setIN5sylar9LogDefineESt4lessIS1_ESaIS1_EE, value: - name: root
+  level: INFO
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+- name: system
+  level: DEBUG
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+
+2024-09-24 10:34:27	name: system.list, description: system list, typename: NSt7__cxx114listIiSaIiEEE, value: - 12
+- 34
+- 56
+
+2024-09-24 10:34:27	name: system.map, description: system map, typename: St3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE, value: k1: 10
+k2: 20
+k3: 31
+
+2024-09-24 10:34:27	name: system.port, description: system port, typename: i, value: 1010
+
+2024-09-24 10:34:27	name: system.set, description: system set, typename: St3setIiSt4lessIiESaIiEE, value: - 1
+- 2
+- 3
+- 4
+
+2024-09-24 10:34:27	name: system.value, description: system value, typename: d, value: 15
+
+2024-09-24 10:34:27	name: system.vec, description: system vec, typename: St6vectorIiSaIiEE, value: - 10
+- 30
+
+2024-09-24 10:34:27	hello system
+2024-09-24 10:34:27	hello system
+2024-09-24 10:40:46	after 1010
+2024-09-24 10:40:46	after 15
+2024-09-24 10:40:46	after int_vec 10
+2024-09-24 10:40:46	after int_vec 30
+2024-09-24 10:40:46	after int_vec yaml:  - 10
+- 30
+2024-09-24 10:40:46	after int_list 12
+2024-09-24 10:40:46	after int_list 34
+2024-09-24 10:40:46	after int_list 56
+2024-09-24 10:40:46	after int_list yaml:  - 12
+- 34
+- 56
+2024-09-24 10:40:46	after int_list 1
+2024-09-24 10:40:46	after int_list 2
+2024-09-24 10:40:46	after int_list 3
+2024-09-24 10:40:46	after int_list 4
+2024-09-24 10:40:46	after int_list yaml:  - 1
+- 2
+- 3
+- 4
+2024-09-24 10:40:46	after int_map {k1 : 10 } 
+2024-09-24 10:40:46	after int_map {k2 : 20 } 
+2024-09-24 10:40:46	after int_map {k3 : 31 } 
+2024-09-24 10:40:46	after int_map yaml:  k1: 10
+k2: 20
+k3: 31
+2024-09-24 10:40:46	 before [ person:  name=  age= 0 sex= 0]
+2024-09-24 10:40:46	 before  yaml:  
+2024-09-24 10:40:46	 size = 0
+2024-09-24 10:40:46	old = [ person:  name=  age= 0 sex= 0], new = [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 10:40:46	 after [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 10:40:46	 after [ person:  name= sylar1 age= 31 sex= 1]
+2024-09-24 10:40:46	 after [ person:  name= sylar2 age= 311 sex= 0]
+2024-09-24 10:40:46	 after [ person:  name= sylar3 age= 313 sex= 1]
+2024-09-24 10:40:46	 after  yaml:  - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+2024-09-24 10:40:46	 size = 3
+2024-09-24 10:40:46	name: class.person, description: person, typename: 6Person, value: name: sylar
+age: 30
+sex: true
+
+2024-09-24 10:40:46	name: class.vec_person, description: vec_person, typename: St6vectorI6PersonSaIS0_EE, value: - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+
+2024-09-24 10:40:46	name: fiber.stack_size, description: fiber stack size, typename: j, value: 1048576
+
+2024-09-24 10:40:46	name: logs, description: logs config, typename: St3setIN5sylar9LogDefineESt4lessIS1_ESaIS1_EE, value: - name: root
+  level: INFO
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+- name: system
+  level: DEBUG
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+
+2024-09-24 10:40:46	name: system.list, description: system list, typename: NSt7__cxx114listIiSaIiEEE, value: - 12
+- 34
+- 56
+
+2024-09-24 10:40:46	name: system.map, description: system map, typename: St3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE, value: k1: 10
+k2: 20
+k3: 31
+
+2024-09-24 10:40:46	name: system.port, description: system port, typename: i, value: 1010
+
+2024-09-24 10:40:46	name: system.set, description: system set, typename: St3setIiSt4lessIiESaIiEE, value: - 1
+- 2
+- 3
+- 4
+
+2024-09-24 10:40:46	name: system.value, description: system value, typename: d, value: 15
+
+2024-09-24 10:40:46	name: system.vec, description: system vec, typename: St6vectorIiSaIiEE, value: - 10
+- 30
+
+2024-09-24 10:40:46	hello system
+2024-09-24 10:40:46	hello system
+2024-09-24 10:50:00	on_logger_conf_change
+2024-09-24 10:50:00	on_logger_conf_change
+2024-09-24 10:50:00	after 1010
+2024-09-24 10:50:00	after 15
+2024-09-24 10:50:00	after int_vec 10
+2024-09-24 10:50:00	after int_vec 30
+2024-09-24 10:50:00	after int_vec yaml:  - 10
+- 30
+2024-09-24 10:50:00	after int_list 12
+2024-09-24 10:50:00	after int_list 34
+2024-09-24 10:50:00	after int_list 56
+2024-09-24 10:50:00	after int_list yaml:  - 12
+- 34
+- 56
+2024-09-24 10:50:00	after int_list 1
+2024-09-24 10:50:00	after int_list 2
+2024-09-24 10:50:00	after int_list 3
+2024-09-24 10:50:00	after int_list 4
+2024-09-24 10:50:00	after int_list yaml:  - 1
+- 2
+- 3
+- 4
+2024-09-24 10:50:00	after int_map {k1 : 10 } 
+2024-09-24 10:50:00	after int_map {k2 : 20 } 
+2024-09-24 10:50:00	after int_map {k3 : 31 } 
+2024-09-24 10:50:00	after int_map yaml:  k1: 10
+k2: 20
+k3: 31
+2024-09-24 10:50:00	 before [ person:  name=  age= 0 sex= 0]
+2024-09-24 10:50:00	 before  yaml:  
+2024-09-24 10:50:00	 size = 0
+2024-09-24 10:50:00	old = [ person:  name=  age= 0 sex= 0], new = [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 10:50:00	 after [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 10:50:00	 after [ person:  name= sylar1 age= 31 sex= 1]
+2024-09-24 10:50:00	 after [ person:  name= sylar2 age= 311 sex= 0]
+2024-09-24 10:50:00	 after [ person:  name= sylar3 age= 313 sex= 1]
+2024-09-24 10:50:00	 after  yaml:  - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+2024-09-24 10:50:00	 size = 3
+2024-09-24 10:50:00	name: class.person, description: person, typename: 6Person, value: name: sylar
+age: 30
+sex: true
+
+2024-09-24 10:50:00	name: class.vec_person, description: vec_person, typename: St6vectorI6PersonSaIS0_EE, value: - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+
+2024-09-24 10:50:00	name: fiber.stack_size, description: fiber stack size, typename: j, value: 1048576
+
+2024-09-24 10:50:00	name: logs, description: logs config, typename: St3setIN5sylar9LogDefineESt4lessIS1_ESaIS1_EE, value: - name: root
+  level: INFO
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+- name: system
+  level: DEBUG
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+
+2024-09-24 10:50:00	name: system.list, description: system list, typename: NSt7__cxx114listIiSaIiEEE, value: - 12
+- 34
+- 56
+
+2024-09-24 10:50:00	name: system.map, description: system map, typename: St3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE, value: k1: 10
+k2: 20
+k3: 31
+
+2024-09-24 10:50:00	name: system.port, description: system port, typename: i, value: 1010
+
+2024-09-24 10:50:00	name: system.set, description: system set, typename: St3setIiSt4lessIiESaIiEE, value: - 1
+- 2
+- 3
+- 4
+
+2024-09-24 10:50:00	name: system.value, description: system value, typename: d, value: 15
+
+2024-09-24 10:50:00	name: system.vec, description: system vec, typename: St6vectorIiSaIiEE, value: - 10
+- 30
+
+2024-09-24 10:50:00	hello system
+2024-09-24 10:50:00	hello system
+2024-09-24 11:00:57	after 1010
+2024-09-24 11:00:57	after 15
+2024-09-24 11:00:57	after int_vec 10
+2024-09-24 11:00:57	after int_vec 30
+2024-09-24 11:00:57	after int_vec yaml:  - 10
+- 30
+2024-09-24 11:00:57	after int_list 12
+2024-09-24 11:00:57	after int_list 34
+2024-09-24 11:00:57	after int_list 56
+2024-09-24 11:00:57	after int_list yaml:  - 12
+- 34
+- 56
+2024-09-24 11:00:57	after int_list 1
+2024-09-24 11:00:57	after int_list 2
+2024-09-24 11:00:57	after int_list 3
+2024-09-24 11:00:57	after int_list 4
+2024-09-24 11:00:57	after int_list yaml:  - 1
+- 2
+- 3
+- 4
+2024-09-24 11:00:57	after int_map {k1 : 10 } 
+2024-09-24 11:00:57	after int_map {k2 : 20 } 
+2024-09-24 11:00:57	after int_map {k3 : 31 } 
+2024-09-24 11:00:57	after int_map yaml:  k1: 10
+k2: 20
+k3: 31
+2024-09-24 11:00:57	 before [ person:  name=  age= 0 sex= 0]
+2024-09-24 11:00:57	 before  yaml:  
+2024-09-24 11:00:57	 size = 0
+2024-09-24 11:00:57	old = [ person:  name=  age= 0 sex= 0], new = [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 11:00:57	 after [ person:  name= sylar age= 30 sex= 1]
+2024-09-24 11:00:57	 after [ person:  name= sylar1 age= 31 sex= 1]
+2024-09-24 11:00:57	 after [ person:  name= sylar2 age= 311 sex= 0]
+2024-09-24 11:00:57	 after [ person:  name= sylar3 age= 313 sex= 1]
+2024-09-24 11:00:57	 after  yaml:  - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+2024-09-24 11:00:57	 size = 3
+2024-09-24 11:00:57	name: class.person, description: person, typename: 6Person, value: name: sylar
+age: 30
+sex: true
+
+2024-09-24 11:00:57	name: class.vec_person, description: vec_person, typename: St6vectorI6PersonSaIS0_EE, value: - name: sylar1
+  age: 31
+  sex: true
+- name: sylar2
+  age: 311
+  sex: false
+- name: sylar3
+  age: 313
+  sex: true
+
+2024-09-24 11:00:57	name: fiber.stack_size, description: fiber stack size, typename: j, value: 1048576
+
+2024-09-24 11:00:57	name: logs, description: logs config, typename: St3setIN5sylar9LogDefineESt4lessIS1_ESaIS1_EE, value: - name: root
+  level: INFO
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+- name: system
+  level: DEBUG
+  formatter: "%d%T%m%n"
+  appenders:
+    - type: FileAppender
+      file: ./log.txt
+    - type: StdoutAppender
+
+2024-09-24 11:00:57	name: system.list, description: system list, typename: NSt7__cxx114listIiSaIiEEE, value: - 12
+- 34
+- 56
+
+2024-09-24 11:00:57	name: system.map, description: system map, typename: St3mapINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEiSt4lessIS5_ESaISt4pairIKS5_iEEE, value: k1: 10
+k2: 20
+k3: 31
+
+2024-09-24 11:00:57	name: system.port, description: system port, typename: i, value: 1010
+
+2024-09-24 11:00:57	name: system.set, description: system set, typename: St3setIiSt4lessIiESaIiEE, value: - 1
+- 2
+- 3
+- 4
+
+2024-09-24 11:00:57	name: system.value, description: system value, typename: d, value: 15
+
+2024-09-24 11:00:57	name: system.vec, description: system vec, typename: St6vectorIiSaIiEE, value: - 10
+- 30
+
+2024-09-24 11:00:57	hello system
+2024-09-24 11:00:57	hello system

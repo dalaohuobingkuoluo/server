@@ -1,0 +1,1 @@
+/usr/bin/c++   -rdynamic -O3 -fPIC -ggdb -std=c++11 -Wall -Wno-deprecated -Werror -Wno-unused-function -Wno-builtin-macro-redefined -Wno-deprecated-declarations  -rdynamic CMakeFiles/wrlock.dir/tests/wrlock.cc.o  -o bin/wrlock  -Wl,-rpath,/home/jerry/mydir/project_server/lib lib/libmy_sylar.so -lyaml-cpp -lpthread 
