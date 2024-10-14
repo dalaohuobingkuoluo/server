@@ -25,7 +25,7 @@ IOManager::FdContext::EventContext& IOManager::FdContext::getContext(Event event
 
 void IOManager::FdContext::resetContext(EventContext& ctx){
     ctx.cb = nullptr;
-    ctx.scheduler == nullptr;
+    ctx.scheduler = nullptr;
     ctx.fiber.reset();
 }
 
@@ -56,10 +56,10 @@ IOManager::IOManager(size_t threads, const std::string& name, bool use_caller)
     //LT 模式下，只要文件描述符处于可读或可写状态，每次调用 epoll_wait() 都会通知；ET 模式则只在状态发生变化时通知一次。
     event.data.fd = m_ticklefd[0];
     rt = fcntl(m_ticklefd[0], F_SETFL, O_NONBLOCK);
-    SYLAR_ASSERT(rt);
+    SYLAR_ASSERT(!rt);
 
     rt = epoll_ctl(m_epfd, EPOLL_CTL_ADD, m_ticklefd[0], &event);
-    SYLAR_ASSERT(rt);
+    SYLAR_ASSERT(!rt);
 
     contextResize(32);
 
@@ -77,7 +77,6 @@ IOManager::~IOManager(){
             delete m_fdContexts[i];
         }
     }
-
 }
 
 int IOManager::addEvent(int fd, Event event, std::function<void()> cb){
@@ -89,7 +88,7 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb){
     }else{
         rdlock.unlock();
         RWMutexType::WriteLock wrlock(m_mutex);
-        contextResize(m_fdContexts.size() * 1.5);
+        contextResize(fd * 1.5);
         fd_ctx = m_fdContexts[fd];
     }
 
@@ -250,6 +249,7 @@ void IOManager::tickle() {
     }
     int rt = write(m_ticklefd[1], "T", 1);
     SYLAR_ASSERT(rt == 1);
+    SYLAR_LOG_DEBUG(g_logger) << Fiber::GetThis() << " send tickle";
 }
 
 bool IOManager::stopping() {
@@ -257,13 +257,14 @@ bool IOManager::stopping() {
 }   
 
 void IOManager::idle() {
+    SYLAR_LOG_DEBUG(g_logger) << "iomanager idle begin";
     const uint64_t MAX_EVENTS = 64;
     epoll_event* events = new epoll_event[MAX_EVENTS]();
     std::shared_ptr<epoll_event> shared_events(events, [](epoll_event* ptr){delete[] ptr;});
 
     while(true){
         if(stopping()){
-            SYLAR_LOG_DEBUG(g_logger) << "name = " << Scheduler::getName() << "idle stopping exit";
+            SYLAR_LOG_DEBUG(g_logger) << "name = " << getName() << "idle stopping exit";
             break;
         }
         int rt = 0;
@@ -275,12 +276,15 @@ void IOManager::idle() {
                 break;
             }
         }while(true); //防止epoll_wait在等待过程由于收到信号而被中断
+        // SYLAR_LOG_DEBUG(g_logger) << "epoll_wait rt = " << rt;
 
         for(int i = 0; i < rt ; ++i){
             epoll_event& event = events[i];
             if(event.data.fd == m_ticklefd[0]){
                 uint8_t dump[256];
-                while(read(m_ticklefd[0], &dump, sizeof(dump)) > 0);
+                while(read(m_ticklefd[0], &dump, sizeof(dump)) > 0){
+                    SYLAR_LOG_DEBUG(g_logger) << Fiber::GetThis() << " receive tickle";
+                };
                 continue;
             }
 
@@ -306,7 +310,7 @@ void IOManager::idle() {
             event.events = EPOLLET | left_event;
 
             int rt2 = epoll_ctl(m_epfd, op, fd_ctx->fd, &event);
-            if(rt){
+            if(rt2){
                 SYLAR_LOG_ERROR(g_logger) << "epoll_ctl fail(" << m_epfd
                                   << "," << op << "," << fd_ctx->fd << "," << event.events << ") fail,"
                                   << rt << "(" << errno << "," << strerror(errno) << ")";

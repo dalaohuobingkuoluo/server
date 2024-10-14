@@ -20,6 +20,16 @@ CMakeFiles/my_sylar.dir/my_sylar/fiber.cpp.o: my_sylar/singleton.h
 CMakeFiles/my_sylar.dir/my_sylar/fiber.cpp.o: my_sylar/thread.h
 CMakeFiles/my_sylar.dir/my_sylar/fiber.cpp.o: my_sylar/util.h
 
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/fiber.h
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/iomanager.cpp
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/iomanager.h
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/log.h
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/macro.h
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/scheduler.h
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/singleton.h
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/thread.h
+CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o: my_sylar/util.h
+
 CMakeFiles/my_sylar.dir/my_sylar/log.cpp.o: my_sylar/config.h
 CMakeFiles/my_sylar.dir/my_sylar/log.cpp.o: my_sylar/fiber.h
 CMakeFiles/my_sylar.dir/my_sylar/log.cpp.o: my_sylar/log.cpp

@@ -62,7 +62,7 @@ namespace sylar{
     Fiber::~Fiber(){
         --s_fiber_count;
         if(m_stack){
-            SYLAR_LOG_DEBUG(g_logger) << m_id << m_state;
+            // SYLAR_LOG_DEBUG(g_logger) << m_id << m_state;
             SYLAR_ASSERT(m_state == TERM || m_state == INIT || m_state == EXCEPT);
             StackAllocator::Dealloc(m_stack, m_stacksize);
         }else {

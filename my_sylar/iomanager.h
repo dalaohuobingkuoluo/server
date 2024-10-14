@@ -14,7 +14,7 @@ public:
     enum Event{
         NONE = 0x0,
         READ = 0x1,
-        WRITE = 0x2,
+        WRITE = 0x4,
     };            //每一位对应一个操作
 
     IOManager(size_t threads = 1, const std::string& name = "", bool use_caller = true);

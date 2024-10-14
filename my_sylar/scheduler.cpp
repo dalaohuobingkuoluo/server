@@ -203,12 +203,12 @@ namespace sylar{
                     break;
                 }
                 ++m_idleThreadCount;
-                //SYLAR_LOG_DEBUG(g_logger) << "idle fiber : " << idle_fiber->shared_from_this().get();
+                SYLAR_LOG_DEBUG(g_logger) << "idle fiber : " << idle_fiber->shared_from_this().get();
                 idle_fiber->swapInCaller();
                 --m_idleThreadCount;
-                //SYLAR_LOG_DEBUG(g_logger) << "idle fiber return";
+                SYLAR_LOG_DEBUG(g_logger) << "idle fiber return";
                 if(idle_fiber->getState() != Fiber::TERM && idle_fiber->getState() != Fiber::EXCEPT){
-                    //SYLAR_LOG_DEBUG(g_logger) << "idle fiber hold";
+                    SYLAR_LOG_DEBUG(g_logger) << "idle fiber hold";
                     idle_fiber->m_state = Fiber::HOLD;
                 }
             }
