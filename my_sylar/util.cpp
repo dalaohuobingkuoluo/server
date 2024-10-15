@@ -1,5 +1,5 @@
 #include "util.h"
-
+#include <sys/time.h>
 
 namespace sylar{
 
@@ -39,6 +39,18 @@ std::string BacktraceToString(int size, const std::string& prefix, int skip){
         ss << prefix << i ;
     }
     return ss.str();
+}
+
+uint64_t GetCurMS(){
+    struct timeval tv;
+    gettimeofday(&tv, nullptr);
+    return tv.tv_sec * 1000ul + tv.tv_usec / 1000;
+}
+
+uint64_t GetCurUM(){
+    struct timeval tv;
+    gettimeofday(&tv, nullptr);
+    return tv.tv_sec * 1000 * 1000ul + tv.tv_usec;
 }
 
 };

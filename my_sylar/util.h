@@ -19,6 +19,8 @@ uint64_t GetFiberId();
 void Backtrace(std::vector<std::string>& bt, int size = 64, int skip = 1);
 std::string BacktraceToString(int size = 64, const std::string& prefix = "", int skip = 2);
 
+uint64_t GetCurMS();  //毫秒
+uint64_t GetCurUM();  //微秒
 };
 
 
