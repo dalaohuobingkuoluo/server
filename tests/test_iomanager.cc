@@ -40,11 +40,37 @@ void test_fiber(){
 }
 
 void test1(){
-    sylar::IOManager iom(2);
+    sylar::IOManager iom(1);
     iom.schedule(test_fiber);
 }
 
+void test_timer(){
+    sylar::Timer::ptr timer;
+    sylar::IOManager iom(2);    
+    //debug：两个线程非循环计时器时可能发生段错误
+    //（经调试后发现在timer.cpp:if(!rollover && !m_timers.empty() && (*m_timers.begin())->m_next > now_ms)
+    //                                  忘记检测m_timers是否为空）
+    timer = iom.addTimer(1000, [&](){
+        static int i = 0;
+        SYLAR_LOG_INFO(g_logger) << "++++++++++hello recurring timer++++++++++   " << i;
+        if(++i == 5){
+            //timer->cancel();
+            // timer->refresh();
+            timer->reset(2000,true);
+        }else if(i == 10){
+            timer->cancel();
+            // timer->refresh();
+            // timer->reset(2000,true);
+        }
+    }, true);
+    SYLAR_LOG_DEBUG(g_logger) << "----------test_timer tail-------------";
+}
+//debug：timer声明为函数内的局部或临时变量,其与iom声明顺序会导致后续reset的回调无法正常运行
+//由于析构与定义顺序相反，在iom后定义导致先析构从而影响后续异步回调过程中该对象不存在
+
 int main(){
-    test1();
+    // test1();
+    test_timer();
+    SYLAR_LOG_DEBUG(g_logger) << "---------test_timer exit------------";
     return 0;
 }

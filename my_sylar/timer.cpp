@@ -1,5 +1,6 @@
 #include "timer.h"
 #include "util.h"
+#include "macro.h"
 
 namespace sylar{
 
@@ -109,6 +110,11 @@ void TimerManager::addTimer(Timer::ptr val, RWMutexType::WriteLock& wrlock){
     }
 }
 
+bool TimerManager::hasTimer(){
+    RWMutexType::ReadLock lock(m_mutex);
+    return !m_timers.empty();
+}
+
 static void OnTimer(std::weak_ptr<void> weak_cond, std::function<void()> cb){
     std::shared_ptr<void> tmp = weak_cond.lock();   //获取管理所监测资源的shared_ptr对象
     if(tmp){
@@ -153,7 +159,7 @@ void TimerManager::listExpiredCbs(std::vector<std::function<void()>>& cbs){
 
     RWMutexType::WriteLock wrlock(m_mutex);
     bool rollover = detectClockRollover(now_ms);
-    if(!rollover && (*m_timers.begin())->m_next > now_ms){
+    if(!rollover && !m_timers.empty() && (*m_timers.begin())->m_next > now_ms){
         return;
     }
 

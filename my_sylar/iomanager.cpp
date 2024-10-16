@@ -252,9 +252,20 @@ void IOManager::tickle() {
     SYLAR_LOG_DEBUG(g_logger) << Fiber::GetThis() << " send tickle";
 }
 
+bool IOManager::stopping(uint64_t& timeout){
+    timeout = getNextTime();
+    // SYLAR_LOG_DEBUG(g_logger) << "timeout == ~0ull : " << (timeout == ~0ull)
+    //                           << ", m_pendingEventCount == 0 : " << (m_pendingEventCount == 0)
+    //                           << ", Scheduler::stopping() : " << Scheduler::stopping();
+    return timeout == ~0ull && m_pendingEventCount == 0  && Scheduler::stopping();
+} 
+
+//Scheduler类也会调用IOManager的stopping方法判断是否结束
 bool IOManager::stopping() {
-    return Scheduler::stopping() && m_pendingEventCount == 0;
-}   
+    // SYLAR_LOG_DEBUG(g_logger) << "IOManager stopping()";
+    uint64_t timeout = 0;
+    return stopping(timeout);
+}
 
 void IOManager::idle() {
     SYLAR_LOG_DEBUG(g_logger) << "iomanager idle begin";
@@ -263,20 +274,42 @@ void IOManager::idle() {
     std::shared_ptr<epoll_event> shared_events(events, [](epoll_event* ptr){delete[] ptr;});
 
     while(true){
-        if(stopping()){
+        uint64_t next_timeout = 0;
+        if(stopping(next_timeout)){
             SYLAR_LOG_DEBUG(g_logger) << "name = " << getName() << "idle stopping exit";
             break;
         }
         int rt = 0;
         do {
-            static const int MAX_TIMEOUT = 3000;
-            rt = epoll_wait(m_epfd, events, MAX_EVENTS, MAX_TIMEOUT);
-            if(rt < 0 && errno == EINTR){
+            static const int MAX_TIMEOUT = 2000;
+            if(next_timeout != ~0ull){
+                next_timeout = (int)next_timeout > MAX_TIMEOUT ? MAX_TIMEOUT : (int)next_timeout;
+            }else{
+                next_timeout = MAX_TIMEOUT;
+            }
+            rt = epoll_wait(m_epfd, events, MAX_EVENTS, (int)next_timeout);
+            if(rt < 0 && errno == EINTR){       //防止epoll_wait在等待过程由于收到信号而被中断
             }else{
                 break;
             }
-        }while(true); //防止epoll_wait在等待过程由于收到信号而被中断
-        // SYLAR_LOG_DEBUG(g_logger) << "epoll_wait rt = " << rt;
+        }while(true); 
+        
+        //执行计时器任务
+        std::vector<std::function<void()>> cbs;
+        listExpiredCbs(cbs);
+        if(!cbs.empty()){
+            schedule(cbs.begin(),cbs.end());
+            SYLAR_LOG_DEBUG(g_logger) << "schedule timers";
+            cbs.clear();
+            
+            //debug：新增定时器任务则需要额外swapout去执行否则会在idle死循环
+            //（因为后续逻辑仅处理IO回调，当没有IO事件时重新循环判断stopping条件，
+            //而此时Scheduler的stopping条件一直无法满足也无法跳出idle）
+            Fiber::ptr cur = Fiber::GetThis();
+            auto raw_ptr = cur.get();
+            cur.reset();
+            raw_ptr->swapOutCaller();
+        }
 
         for(int i = 0; i < rt ; ++i){
             epoll_event& event = events[i];
@@ -342,6 +375,10 @@ void IOManager::contextResize(size_t size){
             m_fdContexts[i]->fd = i;
         }
     }
+}
+
+void IOManager::onTimerInsertAtFront(){
+    tickle();
 }
 
 }

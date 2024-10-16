@@ -20,13 +20,13 @@ friend class TimerManager;
 public:
     typedef std::shared_ptr<Timer> ptr;
 
+    bool cancel();                              //取消定时器
+    bool reset(uint64_t ms, bool from_now);     //是否从当前时刻开始重置定时器的时间间隔
+    bool refresh();                             //刷新定时器的执行时间
+
 private:
     Timer(uint64_t ms, std::function<void()>cb, bool recurring, TimerManager* manager);
     Timer(uint64_t next) : m_next(next) {};
-
-    bool cancel();
-    bool reset(uint64_t ms, bool from_now);
-    bool refresh();
 
     bool m_recurring = false;   //是否为循环定时器
     uint64_t m_ms = 0;          //执行时间周期（毫秒）
@@ -58,6 +58,7 @@ public:
 protected:
     virtual void onTimerInsertAtFront() = 0;        //插入了一个时长最短的定时器，需要唤醒等待的协程重新设置等待时长
     void addTimer(Timer::ptr val, RWMutexType::WriteLock& wrlock);
+    bool hasTimer();
 private:
     bool detectClockRollover(uint64_t now_ms);      //大致检测服务器时间是否被手动调整(向前调整1小时)
 private:

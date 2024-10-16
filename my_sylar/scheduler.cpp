@@ -222,6 +222,7 @@ namespace sylar{
     }
 
     bool Scheduler::stopping(){
+        // SYLAR_LOG_DEBUG(g_logger) << "Scheduler stopping()";
         MutexType::Lock lock(m_mutex);
         return m_autoStop && m_stopping 
             && m_fibers.empty() && m_activeThreadCount == 0;

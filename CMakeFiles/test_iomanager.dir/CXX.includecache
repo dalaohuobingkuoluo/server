@@ -49,6 +49,8 @@ thread.h
 /home/jerry/mydir/project_server/my_sylar/iomanager.h
 scheduler.h
 /home/jerry/mydir/project_server/my_sylar/scheduler.h
+timer.h
+/home/jerry/mydir/project_server/my_sylar/timer.h
 
 /home/jerry/mydir/project_server/my_sylar/log.h
 string
@@ -145,6 +147,18 @@ functional
 -
 semaphore.h
 -
+
+/home/jerry/mydir/project_server/my_sylar/timer.h
+memory
+-
+set
+-
+vector
+-
+functional
+-
+thread.h
+/home/jerry/mydir/project_server/my_sylar/thread.h
 
 /home/jerry/mydir/project_server/my_sylar/util.h
 iostream

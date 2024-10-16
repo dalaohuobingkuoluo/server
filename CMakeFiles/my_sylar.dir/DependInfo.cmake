@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jerry/mydir/project_server/my_sylar/log.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/log.cpp.o"
   "/home/jerry/mydir/project_server/my_sylar/scheduler.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/scheduler.cpp.o"
   "/home/jerry/mydir/project_server/my_sylar/thread.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/thread.cpp.o"
+  "/home/jerry/mydir/project_server/my_sylar/timer.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/timer.cpp.o"
   "/home/jerry/mydir/project_server/my_sylar/util.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/util.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

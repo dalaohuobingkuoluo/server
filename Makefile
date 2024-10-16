@@ -114,6 +114,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_timer
+
+# Build rule for target.
+test_timer: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_timer
+.PHONY : test_timer
+
+# fast build rule for target.
+test_timer/fast:
+	$(MAKE) -f CMakeFiles/test_timer.dir/build.make CMakeFiles/test_timer.dir/build
+.PHONY : test_timer/fast
+
+#=============================================================================
 # Target rules for targets named test_iomanager
 
 # Build rule for target.
@@ -379,6 +392,33 @@ my_sylar/thread.cpp.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/thread.cpp.s
 .PHONY : my_sylar/thread.cpp.s
 
+my_sylar/timer.o: my_sylar/timer.cpp.o
+
+.PHONY : my_sylar/timer.o
+
+# target to build an object file
+my_sylar/timer.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/timer.cpp.o
+.PHONY : my_sylar/timer.cpp.o
+
+my_sylar/timer.i: my_sylar/timer.cpp.i
+
+.PHONY : my_sylar/timer.i
+
+# target to preprocess a source file
+my_sylar/timer.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/timer.cpp.i
+.PHONY : my_sylar/timer.cpp.i
+
+my_sylar/timer.s: my_sylar/timer.cpp.s
+
+.PHONY : my_sylar/timer.s
+
+# target to generate assembly for a file
+my_sylar/timer.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/timer.cpp.s
+.PHONY : my_sylar/timer.cpp.s
+
 my_sylar/util.o: my_sylar/util.cpp.o
 
 .PHONY : my_sylar/util.o
@@ -568,6 +608,33 @@ tests/test_thread.cc.s:
 	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/tests/test_thread.cc.s
 .PHONY : tests/test_thread.cc.s
 
+tests/test_timer.o: tests/test_timer.cc.o
+
+.PHONY : tests/test_timer.o
+
+# target to build an object file
+tests/test_timer.cc.o:
+	$(MAKE) -f CMakeFiles/test_timer.dir/build.make CMakeFiles/test_timer.dir/tests/test_timer.cc.o
+.PHONY : tests/test_timer.cc.o
+
+tests/test_timer.i: tests/test_timer.cc.i
+
+.PHONY : tests/test_timer.i
+
+# target to preprocess a source file
+tests/test_timer.cc.i:
+	$(MAKE) -f CMakeFiles/test_timer.dir/build.make CMakeFiles/test_timer.dir/tests/test_timer.cc.i
+.PHONY : tests/test_timer.cc.i
+
+tests/test_timer.s: tests/test_timer.cc.s
+
+.PHONY : tests/test_timer.s
+
+# target to generate assembly for a file
+tests/test_timer.cc.s:
+	$(MAKE) -f CMakeFiles/test_timer.dir/build.make CMakeFiles/test_timer.dir/tests/test_timer.cc.s
+.PHONY : tests/test_timer.cc.s
+
 tests/test_util.o: tests/test_util.cc.o
 
 .PHONY : tests/test_util.o
@@ -601,6 +668,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... test_timer"
 	@echo "... test_iomanager"
 	@echo "... test_fiber"
 	@echo "... rebuild_cache"
@@ -629,6 +697,9 @@ help:
 	@echo "... my_sylar/thread.o"
 	@echo "... my_sylar/thread.i"
 	@echo "... my_sylar/thread.s"
+	@echo "... my_sylar/timer.o"
+	@echo "... my_sylar/timer.i"
+	@echo "... my_sylar/timer.s"
 	@echo "... my_sylar/util.o"
 	@echo "... my_sylar/util.i"
 	@echo "... my_sylar/util.s"
@@ -650,6 +721,9 @@ help:
 	@echo "... tests/test_thread.o"
 	@echo "... tests/test_thread.i"
 	@echo "... tests/test_thread.s"
+	@echo "... tests/test_timer.o"
+	@echo "... tests/test_timer.i"
+	@echo "... tests/test_timer.s"
 	@echo "... tests/test_util.o"
 	@echo "... tests/test_util.i"
 	@echo "... tests/test_util.s"
