@@ -1,6 +1,7 @@
 #include "scheduler.h"
 #include "log.h"
 #include "macro.h"
+#include "hook.h"
 
 namespace sylar{
     static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
@@ -124,6 +125,7 @@ namespace sylar{
 
     void Scheduler::run(){
         SYLAR_LOG_DEBUG(g_logger) << "run";
+        sylar::set_hook_enable(true);
         setThis();
         if(sylar::GetThreadId() != m_rootThreadId){
             t_scheduler_fiber = Fiber::GetThis().get();
@@ -154,7 +156,7 @@ namespace sylar{
                         continue;
                     }
                     ft = *it;
-                    m_fibers.erase(it);
+                    m_fibers.erase(it++);
                     ++m_activeThreadCount;
                     is_active = true;
                     break;
@@ -167,10 +169,10 @@ namespace sylar{
 
             if(ft.fiber && (ft.fiber->getState() != Fiber::TERM && ft.fiber->getState() != Fiber::EXCEPT)){
                 ft.fiber->swapInCaller();
+                --m_activeThreadCount;
                 if(ft.fiber->getState() == Fiber::READY){
                     schedule(ft.fiber);
                 }else if(ft.fiber->getState() != Fiber::TERM || ft.fiber->getState() != Fiber::EXCEPT){
-                    --m_activeThreadCount;
                     ft.fiber->m_state = Fiber::HOLD;
                 }
                 ft.reset();
@@ -181,12 +183,12 @@ namespace sylar{
                     cb_fiber.reset(new Fiber(ft.cb, true));
                 }
                 ft.reset();
-                cb_fiber->swapInCaller();                
+                cb_fiber->swapInCaller();       
+                --m_activeThreadCount;         
                 if(cb_fiber->getState() == Fiber::READY){
                     schedule(cb_fiber);
                     cb_fiber.reset();
                 }else if(cb_fiber->getState() == Fiber::TERM || cb_fiber->getState() == Fiber::EXCEPT){
-                    --m_activeThreadCount;
                     cb_fiber->reset(nullptr);
                 }else{
                     cb_fiber->m_state = Fiber::HOLD;
@@ -214,7 +216,7 @@ namespace sylar{
             }
             
         }
-        
+        SYLAR_LOG_DEBUG(g_logger) << "run task return";
     }
 
     void Scheduler::tickle(){

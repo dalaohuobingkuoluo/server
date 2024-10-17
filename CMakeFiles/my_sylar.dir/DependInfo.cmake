@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/jerry/mydir/project_server/my_sylar/config.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/config.cpp.o"
   "/home/jerry/mydir/project_server/my_sylar/fiber.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/fiber.cpp.o"
+  "/home/jerry/mydir/project_server/my_sylar/hook.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/hook.cpp.o"
   "/home/jerry/mydir/project_server/my_sylar/iomanager.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/iomanager.cpp.o"
   "/home/jerry/mydir/project_server/my_sylar/log.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/log.cpp.o"
   "/home/jerry/mydir/project_server/my_sylar/scheduler.cpp" "/home/jerry/mydir/project_server/CMakeFiles/my_sylar.dir/my_sylar/scheduler.cpp.o"

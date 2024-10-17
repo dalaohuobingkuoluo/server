@@ -114,17 +114,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_timer
+# Target rules for targets named test_hook
 
 # Build rule for target.
-test_timer: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 test_timer
-.PHONY : test_timer
+test_hook: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_hook
+.PHONY : test_hook
 
 # fast build rule for target.
-test_timer/fast:
-	$(MAKE) -f CMakeFiles/test_timer.dir/build.make CMakeFiles/test_timer.dir/build
-.PHONY : test_timer/fast
+test_hook/fast:
+	$(MAKE) -f CMakeFiles/test_hook.dir/build.make CMakeFiles/test_hook.dir/build
+.PHONY : test_hook/fast
 
 #=============================================================================
 # Target rules for targets named test_iomanager
@@ -283,6 +283,33 @@ my_sylar/fiber.s: my_sylar/fiber.cpp.s
 my_sylar/fiber.cpp.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/fiber.cpp.s
 .PHONY : my_sylar/fiber.cpp.s
+
+my_sylar/hook.o: my_sylar/hook.cpp.o
+
+.PHONY : my_sylar/hook.o
+
+# target to build an object file
+my_sylar/hook.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/hook.cpp.o
+.PHONY : my_sylar/hook.cpp.o
+
+my_sylar/hook.i: my_sylar/hook.cpp.i
+
+.PHONY : my_sylar/hook.i
+
+# target to preprocess a source file
+my_sylar/hook.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/hook.cpp.i
+.PHONY : my_sylar/hook.cpp.i
+
+my_sylar/hook.s: my_sylar/hook.cpp.s
+
+.PHONY : my_sylar/hook.s
+
+# target to generate assembly for a file
+my_sylar/hook.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/hook.cpp.s
+.PHONY : my_sylar/hook.cpp.s
 
 my_sylar/iomanager.o: my_sylar/iomanager.cpp.o
 
@@ -500,6 +527,33 @@ tests/test_fiber.cc.s:
 	$(MAKE) -f CMakeFiles/test_fiber.dir/build.make CMakeFiles/test_fiber.dir/tests/test_fiber.cc.s
 .PHONY : tests/test_fiber.cc.s
 
+tests/test_hook.o: tests/test_hook.cc.o
+
+.PHONY : tests/test_hook.o
+
+# target to build an object file
+tests/test_hook.cc.o:
+	$(MAKE) -f CMakeFiles/test_hook.dir/build.make CMakeFiles/test_hook.dir/tests/test_hook.cc.o
+.PHONY : tests/test_hook.cc.o
+
+tests/test_hook.i: tests/test_hook.cc.i
+
+.PHONY : tests/test_hook.i
+
+# target to preprocess a source file
+tests/test_hook.cc.i:
+	$(MAKE) -f CMakeFiles/test_hook.dir/build.make CMakeFiles/test_hook.dir/tests/test_hook.cc.i
+.PHONY : tests/test_hook.cc.i
+
+tests/test_hook.s: tests/test_hook.cc.s
+
+.PHONY : tests/test_hook.s
+
+# target to generate assembly for a file
+tests/test_hook.cc.s:
+	$(MAKE) -f CMakeFiles/test_hook.dir/build.make CMakeFiles/test_hook.dir/tests/test_hook.cc.s
+.PHONY : tests/test_hook.cc.s
+
 tests/test_iomanager.o: tests/test_iomanager.cc.o
 
 .PHONY : tests/test_iomanager.o
@@ -608,33 +662,6 @@ tests/test_thread.cc.s:
 	$(MAKE) -f CMakeFiles/test_thread.dir/build.make CMakeFiles/test_thread.dir/tests/test_thread.cc.s
 .PHONY : tests/test_thread.cc.s
 
-tests/test_timer.o: tests/test_timer.cc.o
-
-.PHONY : tests/test_timer.o
-
-# target to build an object file
-tests/test_timer.cc.o:
-	$(MAKE) -f CMakeFiles/test_timer.dir/build.make CMakeFiles/test_timer.dir/tests/test_timer.cc.o
-.PHONY : tests/test_timer.cc.o
-
-tests/test_timer.i: tests/test_timer.cc.i
-
-.PHONY : tests/test_timer.i
-
-# target to preprocess a source file
-tests/test_timer.cc.i:
-	$(MAKE) -f CMakeFiles/test_timer.dir/build.make CMakeFiles/test_timer.dir/tests/test_timer.cc.i
-.PHONY : tests/test_timer.cc.i
-
-tests/test_timer.s: tests/test_timer.cc.s
-
-.PHONY : tests/test_timer.s
-
-# target to generate assembly for a file
-tests/test_timer.cc.s:
-	$(MAKE) -f CMakeFiles/test_timer.dir/build.make CMakeFiles/test_timer.dir/tests/test_timer.cc.s
-.PHONY : tests/test_timer.cc.s
-
 tests/test_util.o: tests/test_util.cc.o
 
 .PHONY : tests/test_util.o
@@ -668,7 +695,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... test_timer"
+	@echo "... test_hook"
 	@echo "... test_iomanager"
 	@echo "... test_fiber"
 	@echo "... rebuild_cache"
@@ -685,6 +712,9 @@ help:
 	@echo "... my_sylar/fiber.o"
 	@echo "... my_sylar/fiber.i"
 	@echo "... my_sylar/fiber.s"
+	@echo "... my_sylar/hook.o"
+	@echo "... my_sylar/hook.i"
+	@echo "... my_sylar/hook.s"
 	@echo "... my_sylar/iomanager.o"
 	@echo "... my_sylar/iomanager.i"
 	@echo "... my_sylar/iomanager.s"
@@ -709,6 +739,9 @@ help:
 	@echo "... tests/test_fiber.o"
 	@echo "... tests/test_fiber.i"
 	@echo "... tests/test_fiber.s"
+	@echo "... tests/test_hook.o"
+	@echo "... tests/test_hook.i"
+	@echo "... tests/test_hook.s"
 	@echo "... tests/test_iomanager.o"
 	@echo "... tests/test_iomanager.i"
 	@echo "... tests/test_iomanager.s"
@@ -721,9 +754,6 @@ help:
 	@echo "... tests/test_thread.o"
 	@echo "... tests/test_thread.i"
 	@echo "... tests/test_thread.s"
-	@echo "... tests/test_timer.o"
-	@echo "... tests/test_timer.i"
-	@echo "... tests/test_timer.s"
 	@echo "... tests/test_util.o"
 	@echo "... tests/test_util.i"
 	@echo "... tests/test_util.s"

@@ -133,6 +133,8 @@ fiber.h
 /home/jerry/mydir/project_server/my_sylar/fiber.h
 scheduler.h
 /home/jerry/mydir/project_server/my_sylar/scheduler.h
+iomanager.h
+/home/jerry/mydir/project_server/my_sylar/iomanager.h
 
 /home/jerry/mydir/project_server/my_sylar/thread.h
 thread

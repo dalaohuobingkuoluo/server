@@ -1,4 +1,4 @@
-/home/jerry/mydir/project_server/CMakeFiles/test_timer.dir
+/home/jerry/mydir/project_server/CMakeFiles/test_hook.dir
 /home/jerry/mydir/project_server/CMakeFiles/test_iomanager.dir
 /home/jerry/mydir/project_server/CMakeFiles/test_fiber.dir
 /home/jerry/mydir/project_server/CMakeFiles/rebuild_cache.dir
