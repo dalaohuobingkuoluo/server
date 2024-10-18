@@ -125,7 +125,7 @@ namespace sylar{
 
     void Scheduler::run(){
         SYLAR_LOG_DEBUG(g_logger) << "run";
-        sylar::set_hook_enable(true);
+        sylar::set_hook_enable(true);           //在调度过程设置HOOK将同步的系统函数设置为异步
         setThis();
         if(sylar::GetThreadId() != m_rootThreadId){
             t_scheduler_fiber = Fiber::GetThis().get();
@@ -142,7 +142,7 @@ namespace sylar{
                 MutexType::Lock lock(m_mutex);
                 auto it = m_fibers.begin();
                 while(it != m_fibers.end()){
-                    SYLAR_LOG_DEBUG(g_logger) << "find fiber to do";
+                    // SYLAR_LOG_DEBUG(g_logger) << "find fiber to do";
                     //协程指定线程号不等于当前线程，之后通知其他线程
                     if(it->thread != -1 && it->thread != sylar::GetThreadId()){
                         ++it;
@@ -167,13 +167,15 @@ namespace sylar{
                 tickle();
             }
 
+            //只有READY态的协程被放回任务队列等待重新调度，HOLD态好像被丢弃(目前通过增加定时器将HOLD协程重新调度)
             if(ft.fiber && (ft.fiber->getState() != Fiber::TERM && ft.fiber->getState() != Fiber::EXCEPT)){
                 ft.fiber->swapInCaller();
                 --m_activeThreadCount;
                 if(ft.fiber->getState() == Fiber::READY){
                     schedule(ft.fiber);
-                }else if(ft.fiber->getState() != Fiber::TERM || ft.fiber->getState() != Fiber::EXCEPT){
+                }else if(ft.fiber->getState() != Fiber::TERM && ft.fiber->getState() != Fiber::EXCEPT){
                     ft.fiber->m_state = Fiber::HOLD;
+                    // SYLAR_LOG_DEBUG(g_logger) << ft.fiber->getId() << " set HOLD " << ft.fiber.use_count();
                 }
                 ft.reset();
             }else if(ft.cb){
@@ -192,6 +194,7 @@ namespace sylar{
                     cb_fiber->reset(nullptr);
                 }else{
                     cb_fiber->m_state = Fiber::HOLD;
+                    // SYLAR_LOG_DEBUG(g_logger) << cb_fiber->getId() << " set HOLD " <<cb_fiber.use_count();
                     cb_fiber.reset();
                 }
             }else{
@@ -201,22 +204,22 @@ namespace sylar{
                 }
                 if(idle_fiber->getState() == Fiber::TERM){
                     --m_idleThreadCount;
-                    SYLAR_LOG_DEBUG(g_logger) << "idle fiber term";
+                    // SYLAR_LOG_DEBUG(g_logger) << "idle fiber term";
                     break;
                 }
                 ++m_idleThreadCount;
-                SYLAR_LOG_DEBUG(g_logger) << "idle fiber : " << idle_fiber->shared_from_this().get();
+                // SYLAR_LOG_DEBUG(g_logger) << "idle fiber : " << idle_fiber->shared_from_this().get();
                 idle_fiber->swapInCaller();
                 --m_idleThreadCount;
-                SYLAR_LOG_DEBUG(g_logger) << "idle fiber return";
+                // SYLAR_LOG_DEBUG(g_logger) << "idle fiber return";
                 if(idle_fiber->getState() != Fiber::TERM && idle_fiber->getState() != Fiber::EXCEPT){
-                    SYLAR_LOG_DEBUG(g_logger) << "idle fiber hold";
+                    // SYLAR_LOG_DEBUG(g_logger) << "idle fiber hold";
                     idle_fiber->m_state = Fiber::HOLD;
                 }
             }
             
         }
-        SYLAR_LOG_DEBUG(g_logger) << "run task return";
+        // SYLAR_LOG_DEBUG(g_logger) << "run task return";
     }
 
     void Scheduler::tickle(){

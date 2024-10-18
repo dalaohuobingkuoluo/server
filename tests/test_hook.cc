@@ -15,7 +15,10 @@ void test_sleep(){
     });
     SYLAR_LOG_INFO(g_logger) << "-----------test sleep-----------";
 }
-//协程处于HOLD状态无法析构
+
+//bug：触发断言协程处于HOLD状态无法析构
+//scheduler.cpp:176 条件判断写错导致重新将TERM协程状态置为HOLD
+
 int main(){
     test_sleep();
     return 0;

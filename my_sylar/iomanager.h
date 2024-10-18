@@ -55,7 +55,8 @@ protected:
     bool stopping() override;  
     bool stopping(uint64_t& timeout);  
     void idle() override;         
-    //基于epoll实现的调度器在run函数执行协程任务调度执行，当没有待调度的任务时陷入idle函数实现IO结束后回调函数的处理（加入到调度器等待调度）
+    //基于epoll实现的调度器在run函数执行协程任务调度执行，
+    //当没有待调度的任务时陷入idle函数实现IO结束后回调函数的处理（加入到调度器等待调度）以及定时器任务
 
     void contextResize(size_t size);
     void onTimerInsertAtFront() override;

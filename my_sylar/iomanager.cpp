@@ -249,7 +249,7 @@ void IOManager::tickle() {
     }
     int rt = write(m_ticklefd[1], "T", 1);
     SYLAR_ASSERT(rt == 1);
-    SYLAR_LOG_DEBUG(g_logger) << Fiber::GetThis() << " send tickle";
+    // SYLAR_LOG_DEBUG(g_logger) << Fiber::GetThis() << " send tickle";
 }
 
 bool IOManager::stopping(uint64_t& timeout){
@@ -299,7 +299,7 @@ void IOManager::idle() {
         listExpiredCbs(cbs);
         if(!cbs.empty()){
             schedule(cbs.begin(),cbs.end());
-            SYLAR_LOG_DEBUG(g_logger) << "schedule timers";
+            // SYLAR_LOG_DEBUG(g_logger) << "schedule timers";
             cbs.clear();
             
             //debug：新增定时器任务则需要额外swapout去执行否则会在idle死循环
@@ -316,7 +316,7 @@ void IOManager::idle() {
             if(event.data.fd == m_ticklefd[0]){
                 uint8_t dump[256];
                 while(read(m_ticklefd[0], &dump, sizeof(dump)) > 0){
-                    SYLAR_LOG_DEBUG(g_logger) << Fiber::GetThis() << " receive tickle";
+                    // SYLAR_LOG_DEBUG(g_logger) << Fiber::GetThis() << " receive tickle";
                 };
                 continue;
             }
