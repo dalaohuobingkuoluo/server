@@ -49,6 +49,18 @@ thread.h
 /home/jerry/mydir/project_server/my_sylar/hook.h
 unistd.h
 -
+sys/socket.h
+-
+sys/types.h
+-
+fcntl.h
+-
+sys/ioctl.h
+-
+sys/types.h
+-
+sys/uio.h
+-
 
 /home/jerry/mydir/project_server/my_sylar/iomanager.h
 scheduler.h
