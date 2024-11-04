@@ -85,7 +85,7 @@ yaml-cpp/yaml.h
 -
 map
 -
-./singleton.h
+singleton.h
 /home/jerry/mydir/project_server/my_sylar/singleton.h
 thread.h
 /home/jerry/mydir/project_server/my_sylar/thread.h

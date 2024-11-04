@@ -17,7 +17,7 @@
 #include<stdarg.h>
 #include<yaml-cpp/yaml.h>
 #include<map>
-#include"./singleton.h"
+#include"singleton.h"
 #include "thread.h"
 #include"util.h"
 

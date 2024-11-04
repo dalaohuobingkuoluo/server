@@ -257,6 +257,33 @@ my_sylar/config.cpp.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/config.cpp.s
 .PHONY : my_sylar/config.cpp.s
 
+my_sylar/fd_manager.o: my_sylar/fd_manager.cpp.o
+
+.PHONY : my_sylar/fd_manager.o
+
+# target to build an object file
+my_sylar/fd_manager.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/fd_manager.cpp.o
+.PHONY : my_sylar/fd_manager.cpp.o
+
+my_sylar/fd_manager.i: my_sylar/fd_manager.cpp.i
+
+.PHONY : my_sylar/fd_manager.i
+
+# target to preprocess a source file
+my_sylar/fd_manager.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/fd_manager.cpp.i
+.PHONY : my_sylar/fd_manager.cpp.i
+
+my_sylar/fd_manager.s: my_sylar/fd_manager.cpp.s
+
+.PHONY : my_sylar/fd_manager.s
+
+# target to generate assembly for a file
+my_sylar/fd_manager.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/fd_manager.cpp.s
+.PHONY : my_sylar/fd_manager.cpp.s
+
 my_sylar/fiber.o: my_sylar/fiber.cpp.o
 
 .PHONY : my_sylar/fiber.o
@@ -709,6 +736,9 @@ help:
 	@echo "... my_sylar/config.o"
 	@echo "... my_sylar/config.i"
 	@echo "... my_sylar/config.s"
+	@echo "... my_sylar/fd_manager.o"
+	@echo "... my_sylar/fd_manager.i"
+	@echo "... my_sylar/fd_manager.s"
 	@echo "... my_sylar/fiber.o"
 	@echo "... my_sylar/fiber.i"
 	@echo "... my_sylar/fiber.s"

@@ -1,5 +1,7 @@
-#ifndef __SYLAR__SINGLETON__H__
-#define __SYALR__SINGLETON__H__
+// #ifndef __SYLAR__SINGLETON__H__
+// #define __SYALR__SINGLETON__H__
+
+#pragma once
 
 namespace sylar{
 
@@ -28,4 +30,4 @@ public:
 };
 
 
-#endif
+// #endif
