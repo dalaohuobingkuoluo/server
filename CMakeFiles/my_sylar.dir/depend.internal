@@ -27,12 +27,14 @@ CMakeFiles/my_sylar.dir/my_sylar/fiber.cpp.o
  /home/jerry/mydir/project_server/my_sylar/thread.h
  /home/jerry/mydir/project_server/my_sylar/util.h
 CMakeFiles/my_sylar.dir/my_sylar/hook.cpp.o
+ /home/jerry/mydir/project_server/my_sylar/config.h
  /home/jerry/mydir/project_server/my_sylar/fd_manager.h
  /home/jerry/mydir/project_server/my_sylar/fiber.h
  /home/jerry/mydir/project_server/my_sylar/hook.cpp
  /home/jerry/mydir/project_server/my_sylar/hook.h
  /home/jerry/mydir/project_server/my_sylar/iomanager.h
  /home/jerry/mydir/project_server/my_sylar/log.h
+ /home/jerry/mydir/project_server/my_sylar/macro.h
  /home/jerry/mydir/project_server/my_sylar/scheduler.h
  /home/jerry/mydir/project_server/my_sylar/singleton.h
  /home/jerry/mydir/project_server/my_sylar/thread.h

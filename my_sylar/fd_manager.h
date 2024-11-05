@@ -18,7 +18,6 @@ public:
     bool isInit() const {return m_isInit;}
     bool isSocket() const {return m_isSocket;}
     bool isClose() const {return m_isClose;}
-    bool close();
 
     void setUserNonblock(bool v) {m_userNonblock = v;}
     bool getUserNonblock() const {return m_userNonblock;}
@@ -31,8 +30,8 @@ private:
     // : 1 表示使用位域来限定布尔变量只占用 1bit 位的内存空间
     bool m_isInit: 1 = false; 
     bool m_isSocket: 1 = false;
-    bool m_sysNonblock: 1 = false;
-    bool m_userNonblock: 1 = false;
+    bool m_sysNonblock: 1 = false;              //标志是否已经用fcntl设置O_NONBLOCK状态，在被hook的fcntl系统调用中设置arg参数时用到
+    bool m_userNonblock: 1 = false;             //标志是否用户已经设置O_NONBLOCK状态，在被hook的IO函数中用到，若已经设为非阻塞则无需执行额外的异步逻辑
     bool m_isClose: 1 = false;
     int m_fd;
     uint64_t m_recvTimeout = -1;

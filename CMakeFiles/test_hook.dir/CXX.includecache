@@ -203,4 +203,10 @@ fiber.h
 /home/jerry/mydir/project_server/my_sylar/sylar.h
 ../my_sylar/hook.h
 /home/jerry/mydir/project_server/my_sylar/hook.h
+sys/types.h
+-
+sys/socket.h
+-
+arpa/inet.h
+-
 

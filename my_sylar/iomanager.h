@@ -28,6 +28,7 @@ public:
 
     static IOManager* GetThis();
 
+    bool fdIsLock(int fd);
 private:
 
     struct FdContext{

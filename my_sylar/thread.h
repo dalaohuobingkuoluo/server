@@ -76,13 +76,21 @@ public:
 
     void lock(){    
         pthread_mutex_lock(&m_mutex);
+        m_locked = true;
     }
 
     void unlock(){
         pthread_mutex_unlock(&m_mutex);
+        m_locked = false;
     }
+
+    bool islock(){
+        return m_locked;
+    }
+
 private:
     pthread_mutex_t m_mutex;
+    bool m_locked;  
 };
 
 template<class T>

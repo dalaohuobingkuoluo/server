@@ -66,6 +66,10 @@ IOManager::IOManager(size_t threads, const std::string& name, bool use_caller)
     start();
 }
 
+bool IOManager::fdIsLock(int fd){
+    return m_fdContexts[fd]->mutex.islock();
+}
+
 IOManager::~IOManager(){
     stop();
     close(m_epfd);
@@ -91,43 +95,45 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb){
         contextResize(fd * 1.5);
         fd_ctx = m_fdContexts[fd];
     }
+    {
+        FdContext::MutexType::Lock lock(fd_ctx->mutex);
+        if(fd_ctx->event & event){               //不同线程/协程操作同一事件类型
+            SYLAR_LOG_ERROR(g_logger) << "addEvent assert fd = " << fd      
+                                    << ", event = " << event
+                                    << ", fd_ctx->event = " << fd_ctx->event;
+            SYLAR_ASSERT(!(fd_ctx->event & event));
+        }
 
-    FdContext::MutexType::Lock lock(fd_ctx->mutex);
-    if(fd_ctx->event & event){               //不同线程/协程操作同一事件类型
-        SYLAR_LOG_ERROR(g_logger) << "addEvent assert fd = " << fd      
-                                  << ", event = " << event
-                                  << ", fd_ctx->event = " << fd_ctx->event;
-        SYLAR_ASSERT(!(fd_ctx->event & event));
+        int op = fd_ctx->event ? EPOLL_CTL_MOD : EPOLL_CTL_ADD;
+        epoll_event epev;
+        memset(&epev, 0, sizeof(epoll_event));
+        epev.events = EPOLLET | fd_ctx->event | event;
+        epev.data.ptr = fd_ctx;
+
+        int rt = epoll_ctl(m_epfd, op, fd, &epev);
+        if(rt){
+            SYLAR_LOG_ERROR(g_logger) << "epoll_ctl fail(" << m_epfd
+                                    << "," << op << "," << fd << "," << epev.events << ") fail,"
+                                    << rt << "(" << errno << "," << strerror(errno) << ")";
+            return -1;
+        }
+
+        ++m_pendingEventCount;
+        fd_ctx->event = (Event)(fd_ctx->event | event);
+        FdContext::EventContext& event_ctx = fd_ctx->getContext(event);
+
+        SYLAR_ASSERT(!event_ctx.cb && !event_ctx.fiber && !event_ctx.scheduler); 
+
+        event_ctx.scheduler = Scheduler::GetThis();
+        if(cb){
+            event_ctx.cb.swap(cb);
+        }else{
+            event_ctx.fiber = Fiber::GetThis();
+            SYLAR_ASSERT(event_ctx.fiber->getState() == Fiber::EXEC);
+        }
     }
-
-    int op = fd_ctx->event ? EPOLL_CTL_MOD : EPOLL_CTL_ADD;
-    epoll_event epev;
-    memset(&epev, 0, sizeof(epoll_event));
-    epev.events = EPOLLET | fd_ctx->event | event;
-    epev.data.ptr = fd_ctx;
-
-    int rt = epoll_ctl(m_epfd, op, fd, &epev);
-    if(rt){
-        SYLAR_LOG_ERROR(g_logger) << "epoll_ctl fail(" << m_epfd
-                                  << "," << op << "," << fd << "," << epev.events << ") fail,"
-                                  << rt << "(" << errno << "," << strerror(errno) << ")";
-        return -1;
-    }
-
-    ++m_pendingEventCount;
-    fd_ctx->event = (Event)(fd_ctx->event | event);
-    FdContext::EventContext& event_ctx = fd_ctx->getContext(event);
-
-    SYLAR_ASSERT(!event_ctx.cb && !event_ctx.fiber && !event_ctx.scheduler); 
-
-    event_ctx.scheduler = Scheduler::GetThis();
-    if(cb){
-        event_ctx.cb.swap(cb);
-    }else{
-        event_ctx.fiber = Fiber::GetThis();
-        SYLAR_ASSERT(event_ctx.fiber->getState() == Fiber::EXEC);
-    }
-
+    SYLAR_LOG_DEBUG(sylar::g_logger) << "after addEvent " << "fd = " << fd 
+                                         << " trylock " << fd_ctx->mutex.islock();
     return 0;
 }
 
@@ -174,28 +180,34 @@ bool IOManager::cancelEvent(int fd,Event event){
     FdContext* fd_ctx = m_fdContexts[fd];
     rdlock.unlock();
 
-    FdContext::MutexType::Lock lock(fd_ctx->mutex);
-    if(!(fd_ctx->event & event)){
-        return false;
+    {
+        FdContext::MutexType::Lock lock(fd_ctx->mutex);
+        if(!(fd_ctx->event & event)){
+            SYLAR_LOG_DEBUG(sylar::g_logger) << "after cancelEvent " << "fd = " << fd 
+                                         << " trylock " << fd_ctx->mutex.islock();
+            return false;
+        }
+
+        Event new_event = (Event)(fd_ctx->event & ~event);
+        int op = new_event ? EPOLL_CTL_MOD : EPOLL_CTL_DEL;
+        epoll_event epev;
+        memset(&epev, 0, sizeof(epoll_event));
+        epev.events = EPOLLET | new_event;
+        epev.data.ptr = fd_ctx;
+
+        int rt = epoll_ctl(m_epfd, op, fd, &epev);
+        if(rt){
+            SYLAR_LOG_ERROR(g_logger) << "epoll_ctl fail(" << m_epfd
+                                    << "," << op << "," << fd << "," << epev.events << ") fail,"
+                                    << rt << "(" << errno << "," << strerror(errno) << ")";
+            return false;
+        }
+
+        fd_ctx->triggerEvent(event);
+        --m_pendingEventCount;
     }
-
-    Event new_event = (Event)(fd_ctx->event & ~event);
-    int op = new_event ? EPOLL_CTL_MOD : EPOLL_CTL_DEL;
-    epoll_event epev;
-    memset(&epev, 0, sizeof(epoll_event));
-    epev.events = EPOLLET | new_event;
-    epev.data.ptr = fd_ctx;
-
-    int rt = epoll_ctl(m_epfd, op, fd, &epev);
-    if(rt){
-        SYLAR_LOG_ERROR(g_logger) << "epoll_ctl fail(" << m_epfd
-                                  << "," << op << "," << fd << "," << epev.events << ") fail,"
-                                  << rt << "(" << errno << "," << strerror(errno) << ")";
-        return false;
-    }
-
-    fd_ctx->triggerEvent(event);
-    --m_pendingEventCount;
+    SYLAR_LOG_DEBUG(sylar::g_logger) << "after cancelEvent " << "fd = " << fd 
+                                         << " trylock " << fd_ctx->mutex.islock();
     return true;
 }
 
