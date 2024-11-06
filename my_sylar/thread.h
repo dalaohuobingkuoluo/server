@@ -7,19 +7,18 @@
 #include <pthread.h>
 #include <functional>
 #include <semaphore.h>
+#include <vector>
+#include "noncopyable.h"
 
 namespace sylar{
 
-class Semaphore{
+class Semaphore : Noncopyable {
 public:
     Semaphore(uint32_t count = 0);
     ~Semaphore();
     void wait();
     void post();
 private:
-    Semaphore(const Semaphore&) = delete;
-    Semaphore(const Semaphore&&) = delete;
-    Semaphore& operator=(const Semaphore&) = delete;
     sem_t m_semaphore;
 };
 
@@ -63,7 +62,7 @@ public:
     void unlock(){}
 };
 
-class Mutex{
+class Mutex : Noncopyable {
 public:
     typedef ScopedLockImpl<Mutex> Lock;
     Mutex(){
@@ -76,21 +75,33 @@ public:
 
     void lock(){    
         pthread_mutex_lock(&m_mutex);
-        m_locked = true;
+        // notifyListeners(m_locked, true);
+        // m_locked = true;
     }
 
     void unlock(){
         pthread_mutex_unlock(&m_mutex);
-        m_locked = false;
+        // notifyListeners(m_locked, false);
+        // m_locked = false;
     }
 
-    bool islock(){
-        return m_locked;
-    }
+    // bool islock(){
+    //     return m_locked;
+    // }
 
 private:
     pthread_mutex_t m_mutex;
-    bool m_locked;  
+// public:
+//     void addListener(std::function<void(bool, bool)> listener) {
+//         m_listeners.push_back(listener);
+//     }
+//     void notifyListeners(bool old_locked, bool new_locked) {
+//         for (auto& listener : m_listeners) {
+//             listener(old_locked, new_locked);
+//         }
+//     }
+//     std::vector<std::function<void(bool, bool)>> m_listeners;
+//     bool m_locked;  
 };
 
 template<class T>
@@ -166,7 +177,7 @@ public:
     void unlock(){}
 };
 
-class RWMutex{
+class RWMutex : Noncopyable {
 public:
     typedef WriteScopedLockImpl<RWMutex> WriteLock;
     typedef ReadScopedLockImpl<RWMutex> ReadLock;
@@ -195,7 +206,7 @@ private:
     pthread_rwlock_t m_lock;
 };
 
-class Spinlock{
+class Spinlock : Noncopyable {
 public:
     typedef ScopedLockImpl<Spinlock> Lock;
 
@@ -219,7 +230,7 @@ private:
     pthread_spinlock_t m_mutex;
 };
 
-class Thread {
+class Thread : Noncopyable {
 public:
     typedef std::shared_ptr<Thread> ptr;
     Thread(std::function<void()> cb, const std::string name);
@@ -236,7 +247,6 @@ public:
 
 private:
     Thread(const Thread&) = delete;
-    Thread(const Thread&&) = delete;
     Thread& operator=(const Thread&) = delete;
 
     static void* run(void* arg);   

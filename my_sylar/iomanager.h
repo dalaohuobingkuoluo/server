@@ -28,8 +28,8 @@ public:
 
     static IOManager* GetThis();
 
-    bool fdIsLock(int fd);
-private:
+    // bool fdIsLock(int fd);
+public:
 
     struct FdContext{
         typedef Mutex MutexType;
@@ -67,6 +67,7 @@ private:
 
     std::atomic<size_t> m_pendingEventCount{0};
     RWMutexType m_mutex;
+public:
     std::vector<FdContext*> m_fdContexts;
 
 };

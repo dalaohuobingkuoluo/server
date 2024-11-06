@@ -6,13 +6,14 @@
 #include "fiber.h"
 #include "iomanager.h"
 #include "fd_manager.h"
+#include "util.h"
 #include <functional>
 
 namespace sylar{
 
 static sylar::ConfigVar<int>::ptr g_tcp_connect_timeout 
                 = sylar::Config::Lookup("tcp.connect.timeout", 5000, "tcp connect timeout");
-static thread_local bool t_hook_enable = false;     //线程级hook
+static thread_local bool t_hook_enable = false;     //线程级hook   
 static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
 
 #define HOOK_FUN(XX)\
@@ -127,9 +128,7 @@ static ssize_t do_io(int fd, OriginFun fun, const char* hook_fun_name,
                 }, winfo);
             }
 
-            SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " addEvent";
             int rt = iom->addEvent(fd, (sylar::IOManager::Event)event);         //将当前协程上下文作为回调函数注册事件
-            SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " rt = " << rt;
             if(rt){
                 SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " addEvent(" 
                                         << fd << ", " << event << ") error";
@@ -138,9 +137,9 @@ static ssize_t do_io(int fd, OriginFun fun, const char* hook_fun_name,
                 }
                 return -1;
             }else{
-                SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " Yield";
+                SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " before yiled";
                 sylar::Fiber::YiledToHold();             //从条件定时器timer返回或有数据返回115行注册的IO事件返回
-                SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " wake";
+                SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " after yiled";
                 if(timer){
                     timer->cancel();
                 }
@@ -256,6 +255,7 @@ int connect_with_timeout(int sockfd, const struct sockaddr *addr, socklen_t addr
 
     if(timeout != (uint64_t)-1){
         iom->addConditionTimer(timeout, [sockfd, iom, winfo](){
+            SYLAR_LOG_DEBUG(sylar::g_logger) << "-------trigger cancelEvent------";
             auto t = winfo.lock();
             if(!t || t->cancelled){
                 return;
@@ -267,11 +267,20 @@ int connect_with_timeout(int sockfd, const struct sockaddr *addr, socklen_t addr
 
     int rt = iom->addEvent(sockfd, sylar::IOManager::WRITE);
     if(rt == 0){
-        SYLAR_LOG_DEBUG(sylar::g_logger) << "connect_with_timeout before yield, " << "scokfd = " << sockfd 
-                                         << " trylock " << iom->fdIsLock(sockfd);
+        // iom->m_fdContexts[sockfd]->mutex.addListener([](bool old_locked, bool new_locked){
+        //     if (old_locked != new_locked) {
+        //         SYLAR_LOG_DEBUG(sylar::g_logger) << "Lock state changed: from "
+        //                                         << (old_locked ? "locked" : "unlocked") 
+        //                                         << " to " << (new_locked ? "locked" : "unlocked");
+        //         SYLAR_LOG_ERROR(SYLAR_LOG_ROOT) << "backtrace" 
+        //                                         << sylar::BacktraceToString(100,"   \n") << "end"; 
+        //     }
+        // });
+        // SYLAR_LOG_DEBUG(sylar::g_logger) << "connect_with_timeout before yield, " << "scokfd = " << sockfd 
+        //                                  << " trylock " << iom->fdIsLock(sockfd);
         sylar::Fiber::YiledToHold();
-        SYLAR_LOG_DEBUG(sylar::g_logger) << "connect_with_timeout after yield, " << "scokfd = " << sockfd 
-                                         << " trylock " << iom->fdIsLock(sockfd);
+        // SYLAR_LOG_DEBUG(sylar::g_logger) << "connect_with_timeout after yield, " << "scokfd = " << sockfd 
+        //                                  << " trylock " << iom->fdIsLock(sockfd);
         if(timer){
             timer->cancel();
         }
@@ -285,6 +294,7 @@ int connect_with_timeout(int sockfd, const struct sockaddr *addr, socklen_t addr
         }
         SYLAR_LOG_ERROR(sylar::g_logger) << "connect addEvent(" << sockfd << ", WRITE) error";
     }
+    // SYLAR_LOG_DEBUG(sylar::g_logger) << "connect_with_timeout rt = " << rt;
     int error = 0;
     socklen_t size = sizeof(int);
     if(getsockopt(sockfd, SOL_SOCKET, SO_ERROR, &error, &size) == -1){

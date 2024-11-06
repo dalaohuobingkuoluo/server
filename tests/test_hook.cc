@@ -36,6 +36,8 @@ void test_sock(){
     if(rt){
         return;
     }
+    // SYLAR_LOG_DEBUG(g_logger) << "test_sock, " << "scok = " << sock 
+    //                                      << " trylock " << sylar::IOManager::GetThis()->fdIsLock(sock);
 
     const char data[] = "GET / HTTP/1.0\r\n\r\n";
     rt = send(sock, data, sizeof(data), 0);
@@ -55,8 +57,10 @@ void test_sock(){
     SYLAR_LOG_INFO(g_logger) << buff;
 }
 //bug：connect_with_timeout在yield前后发生FdContext上锁导致recv执行do_io addEvent时发生死锁，调试模式下可能由于调试器介入
-//     改变调度时间未触发竟态
-//
+//     改变调度时间未触发竟态，从而无法定位错误位置
+//solve：借助回调机制以及观察者模式，在实现锁的类中添加与ConfigVar中on_change_cb相同机制的锁状态变化回调监听函数，
+//       在合适的位置（hook.cpp:268）注册监听回调函数，当锁状态发生变化时通知所有监听函数查看函数调用栈定位错误。
+//       错误出现在iomanager.cpp：idle函数332行为fd_ctx加锁后没有解锁直接协程切换导致死锁
 
 
 int main(){

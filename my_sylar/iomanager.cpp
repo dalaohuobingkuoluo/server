@@ -66,9 +66,9 @@ IOManager::IOManager(size_t threads, const std::string& name, bool use_caller)
     start();
 }
 
-bool IOManager::fdIsLock(int fd){
-    return m_fdContexts[fd]->mutex.islock();
-}
+// bool IOManager::fdIsLock(int fd){
+//     return m_fdContexts[fd]->mutex.islock();
+// }
 
 IOManager::~IOManager(){
     stop();
@@ -132,8 +132,6 @@ int IOManager::addEvent(int fd, Event event, std::function<void()> cb){
             SYLAR_ASSERT(event_ctx.fiber->getState() == Fiber::EXEC);
         }
     }
-    SYLAR_LOG_DEBUG(sylar::g_logger) << "after addEvent " << "fd = " << fd 
-                                         << " trylock " << fd_ctx->mutex.islock();
     return 0;
 }
 
@@ -183,8 +181,6 @@ bool IOManager::cancelEvent(int fd,Event event){
     {
         FdContext::MutexType::Lock lock(fd_ctx->mutex);
         if(!(fd_ctx->event & event)){
-            SYLAR_LOG_DEBUG(sylar::g_logger) << "after cancelEvent " << "fd = " << fd 
-                                         << " trylock " << fd_ctx->mutex.islock();
             return false;
         }
 
@@ -206,8 +202,6 @@ bool IOManager::cancelEvent(int fd,Event event){
         fd_ctx->triggerEvent(event);
         --m_pendingEventCount;
     }
-    SYLAR_LOG_DEBUG(sylar::g_logger) << "after cancelEvent " << "fd = " << fd 
-                                         << " trylock " << fd_ctx->mutex.islock();
     return true;
 }
 
@@ -333,44 +327,45 @@ void IOManager::idle() {
                 continue;
             }
 
-            FdContext* fd_ctx = (FdContext*)event.data.ptr;
-            FdContext::MutexType::Lock lock(fd_ctx->mutex);
-            
-            //当另一端发生异常时，继续尝试监听原本的事件，保证正确处理这些数据，之后再关闭文件描述符
-            if(event.events & (EPOLLHUP | EPOLLERR)){      
-                event.events |= (EPOLLIN | EPOLLOUT) & fd_ctx->event;
-            }
-            int real_event = NONE;
-            if(event.events & EPOLLIN){
-                real_event |= READ;
-            }
-            if(event.events & EPOLLOUT){
-                real_event |= WRITE;
-            }
-            if((fd_ctx->event & real_event) == NONE){
-                continue;
-            }
-            int left_event = fd_ctx->event & ~real_event;
-            int op = left_event ? EPOLL_CTL_MOD : EPOLL_CTL_DEL;
-            event.events = EPOLLET | left_event;
+            {
+                FdContext* fd_ctx = (FdContext*)event.data.ptr;
+                FdContext::MutexType::Lock lock(fd_ctx->mutex);
+                
+                //当另一端发生异常时，继续尝试监听原本的事件，保证正确处理这些数据，之后再关闭文件描述符
+                if(event.events & (EPOLLHUP | EPOLLERR)){      
+                    event.events |= (EPOLLIN | EPOLLOUT) & fd_ctx->event;
+                }
+                int real_event = NONE;
+                if(event.events & EPOLLIN){
+                    real_event |= READ;
+                }
+                if(event.events & EPOLLOUT){
+                    real_event |= WRITE;
+                }
+                if((fd_ctx->event & real_event) == NONE){
+                    continue;
+                }
+                int left_event = fd_ctx->event & ~real_event;
+                int op = left_event ? EPOLL_CTL_MOD : EPOLL_CTL_DEL;
+                event.events = EPOLLET | left_event;
 
-            int rt2 = epoll_ctl(m_epfd, op, fd_ctx->fd, &event);
-            if(rt2){
-                SYLAR_LOG_ERROR(g_logger) << "epoll_ctl fail(" << m_epfd
-                                  << "," << op << "," << fd_ctx->fd << "," << event.events << ") fail,"
-                                  << rt << "(" << errno << "," << strerror(errno) << ")";
-                continue;
-            }
+                int rt2 = epoll_ctl(m_epfd, op, fd_ctx->fd, &event);
+                if(rt2){
+                    SYLAR_LOG_ERROR(g_logger) << "epoll_ctl fail(" << m_epfd
+                                    << "," << op << "," << fd_ctx->fd << "," << event.events << ") fail,"
+                                    << rt << "(" << errno << "," << strerror(errno) << ")";
+                    continue;
+                }
 
-            if(real_event & READ){
-                fd_ctx->triggerEvent(READ);
-                --m_pendingEventCount;
+                if(real_event & READ){
+                    fd_ctx->triggerEvent(READ);
+                    --m_pendingEventCount;
+                }
+                if(real_event & WRITE){
+                    fd_ctx->triggerEvent(WRITE);
+                    --m_pendingEventCount;
+                }
             }
-            if(real_event & WRITE){
-                fd_ctx->triggerEvent(WRITE);
-                --m_pendingEventCount;
-            }
-
             Fiber::ptr cur = Fiber::GetThis();
             auto raw_ptr = cur.get();
             cur.reset();
