@@ -5,6 +5,7 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o: my_sylar/config.h
 CMakeFiles/test_config.dir/tests/test_config.cc.o: my_sylar/fiber.h
 CMakeFiles/test_config.dir/tests/test_config.cc.o: my_sylar/log.h
 CMakeFiles/test_config.dir/tests/test_config.cc.o: my_sylar/macro.h
+CMakeFiles/test_config.dir/tests/test_config.cc.o: my_sylar/noncopyable.h
 CMakeFiles/test_config.dir/tests/test_config.cc.o: my_sylar/singleton.h
 CMakeFiles/test_config.dir/tests/test_config.cc.o: my_sylar/thread.h
 CMakeFiles/test_config.dir/tests/test_config.cc.o: my_sylar/util.h

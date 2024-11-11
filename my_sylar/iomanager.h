@@ -27,8 +27,6 @@ public:
     bool cancelAll(int fd);
 
     static IOManager* GetThis();
-
-    // bool fdIsLock(int fd);
 public:
 
     struct FdContext{

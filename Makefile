@@ -230,6 +230,33 @@ my_sylar/fast:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/build
 .PHONY : my_sylar/fast
 
+my_sylar/address.o: my_sylar/address.cpp.o
+
+.PHONY : my_sylar/address.o
+
+# target to build an object file
+my_sylar/address.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/address.cpp.o
+.PHONY : my_sylar/address.cpp.o
+
+my_sylar/address.i: my_sylar/address.cpp.i
+
+.PHONY : my_sylar/address.i
+
+# target to preprocess a source file
+my_sylar/address.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/address.cpp.i
+.PHONY : my_sylar/address.cpp.i
+
+my_sylar/address.s: my_sylar/address.cpp.s
+
+.PHONY : my_sylar/address.s
+
+# target to generate assembly for a file
+my_sylar/address.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/address.cpp.s
+.PHONY : my_sylar/address.cpp.s
+
 my_sylar/config.o: my_sylar/config.cpp.o
 
 .PHONY : my_sylar/config.o
@@ -733,6 +760,9 @@ help:
 	@echo "... test_scheduler"
 	@echo "... test_log"
 	@echo "... my_sylar"
+	@echo "... my_sylar/address.o"
+	@echo "... my_sylar/address.i"
+	@echo "... my_sylar/address.s"
 	@echo "... my_sylar/config.o"
 	@echo "... my_sylar/config.i"
 	@echo "... my_sylar/config.s"

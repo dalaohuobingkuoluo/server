@@ -66,10 +66,6 @@ IOManager::IOManager(size_t threads, const std::string& name, bool use_caller)
     start();
 }
 
-// bool IOManager::fdIsLock(int fd){
-//     return m_fdContexts[fd]->mutex.islock();
-// }
-
 IOManager::~IOManager(){
     stop();
     close(m_epfd);

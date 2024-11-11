@@ -7,6 +7,7 @@ CMakeFiles/test_iomanager.dir/tests/test_iomanager.cc.o
  /home/jerry/mydir/project_server/my_sylar/iomanager.h
  /home/jerry/mydir/project_server/my_sylar/log.h
  /home/jerry/mydir/project_server/my_sylar/macro.h
+ /home/jerry/mydir/project_server/my_sylar/noncopyable.h
  /home/jerry/mydir/project_server/my_sylar/scheduler.h
  /home/jerry/mydir/project_server/my_sylar/singleton.h
  /home/jerry/mydir/project_server/my_sylar/sylar.h

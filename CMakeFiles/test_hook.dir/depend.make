@@ -7,6 +7,7 @@ CMakeFiles/test_hook.dir/tests/test_hook.cc.o: my_sylar/hook.h
 CMakeFiles/test_hook.dir/tests/test_hook.cc.o: my_sylar/iomanager.h
 CMakeFiles/test_hook.dir/tests/test_hook.cc.o: my_sylar/log.h
 CMakeFiles/test_hook.dir/tests/test_hook.cc.o: my_sylar/macro.h
+CMakeFiles/test_hook.dir/tests/test_hook.cc.o: my_sylar/noncopyable.h
 CMakeFiles/test_hook.dir/tests/test_hook.cc.o: my_sylar/scheduler.h
 CMakeFiles/test_hook.dir/tests/test_hook.cc.o: my_sylar/singleton.h
 CMakeFiles/test_hook.dir/tests/test_hook.cc.o: my_sylar/sylar.h

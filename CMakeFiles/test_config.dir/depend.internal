@@ -6,6 +6,7 @@ CMakeFiles/test_config.dir/tests/test_config.cc.o
  /home/jerry/mydir/project_server/my_sylar/fiber.h
  /home/jerry/mydir/project_server/my_sylar/log.h
  /home/jerry/mydir/project_server/my_sylar/macro.h
+ /home/jerry/mydir/project_server/my_sylar/noncopyable.h
  /home/jerry/mydir/project_server/my_sylar/singleton.h
  /home/jerry/mydir/project_server/my_sylar/thread.h
  /home/jerry/mydir/project_server/my_sylar/util.h

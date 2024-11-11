@@ -15,6 +15,7 @@ set(LIB_SRC
     my_sylar/timer.cpp
     my_sylar/hook.cpp
     my_sylar/fd_manager.cpp
+    my_sylar/address.cpp
     )
 
 add_library(my_sylar SHARED ${LIB_SRC})

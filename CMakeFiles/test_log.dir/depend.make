@@ -3,6 +3,7 @@
 
 CMakeFiles/test_log.dir/tests/test_log.cc.o: my_sylar/fiber.h
 CMakeFiles/test_log.dir/tests/test_log.cc.o: my_sylar/log.h
+CMakeFiles/test_log.dir/tests/test_log.cc.o: my_sylar/noncopyable.h
 CMakeFiles/test_log.dir/tests/test_log.cc.o: my_sylar/singleton.h
 CMakeFiles/test_log.dir/tests/test_log.cc.o: my_sylar/thread.h
 CMakeFiles/test_log.dir/tests/test_log.cc.o: my_sylar/util.h

@@ -94,6 +94,8 @@ util.h
 assert.h
 -
 
+/home/jerry/mydir/project_server/my_sylar/noncopyable.h
+
 /home/jerry/mydir/project_server/my_sylar/singleton.h
 
 /home/jerry/mydir/project_server/my_sylar/thread.h
@@ -111,6 +113,8 @@ semaphore.h
 -
 vector
 -
+noncopyable.h
+/home/jerry/mydir/project_server/my_sylar/noncopyable.h
 
 /home/jerry/mydir/project_server/my_sylar/util.h
 iostream
