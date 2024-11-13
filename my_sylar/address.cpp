@@ -4,6 +4,7 @@
 #include <sstream>
 #include <algorithm>
 #include <netdb.h>
+#include <ifaddrs.h>
 
 namespace sylar{
 
@@ -35,6 +36,171 @@ Address::ptr Address::Create(const sockaddr* addr, socklen_t addrlen){
     }
     return rtaddr;
 }
+
+bool Address::Lookup(std::vector<Address::ptr> &result, const std::string &host,
+                       int family, int type, int protocol){
+    addrinfo hints, *results, *next;
+    memset(&hints, 0, sizeof(addrinfo));
+    hints.ai_family = family;
+    hints.ai_socktype = type;
+    hints.ai_protocol = protocol;
+
+    std::string node;
+    const char *service = NULL, *bound = host.c_str() + host.size();
+    //[ipv6地址]:service
+    if(!host.empty() && host[0] == '['){
+        const char* endipv6 = (const char*)memchr(host.c_str(), ']', host.size() - 1);
+        if(endipv6){
+            if(endipv6 + 1 < bound && *(endipv6 + 1) == ':'){
+                if(endipv6 + 2 < bound){
+                    service = endipv6 + 2;
+                }else{
+                    SYLAR_LOG_ERROR(g_logger) << "Address::Lookup(" << host << "," << family 
+                                              << "," << type << "," << protocol 
+                                              << ") fail, host = [ipv6]:service out of range";
+                    return false;
+                }
+            }
+            node = host.substr(1, endipv6 - host.c_str() -1);
+        }
+    }
+    //node:service
+    if(!node.empty()){
+        service = (const char*)memchr(host.c_str(), ':', host.size());
+        if(service){
+            if(service + 1 < bound){
+                service++;
+            }else{
+                SYLAR_LOG_ERROR(g_logger) << "Address::Lookup(" << host << "," << family 
+                                          << "," << type << "," << protocol 
+                                          << ") fail, host = node:service out of range";
+                return false;
+            }
+            node = host.substr(0, service - host.c_str());
+        }
+    }
+    //无service字段
+    if(node.empty()){
+        node = host;
+    }
+
+    int err = getaddrinfo(node.c_str(), service, &hints, &results);
+    if(err){
+        SYLAR_LOG_ERROR(g_logger) << "Address::Lookup(" << host << "," << family 
+                                  << "," << type << "," << protocol 
+                                  << ") getaddrinfo fail, err = " << err << "errstr = "
+                                  << gai_strerror(err);
+        return false;
+    }
+    next = results;
+    while(next){
+        result.push_back(Create(next->ai_addr, next->ai_addrlen));
+        next = next->ai_next;
+    }
+    return true;
+}
+
+Address::ptr Address::LookupAny(const std::string& host, int family, int type, int protocol){
+    std::vector<Address::ptr> res;
+    if(Lookup(res, host, family, type, protocol)){
+        return res[0];
+    }
+    return nullptr;
+}    
+
+std::shared_ptr<IPAddress> Address::LookupAnyIPAddress(const std::string& host, int family, int type, int protocol){
+    std::vector<Address::ptr> res;
+    if(Lookup(res, host, family, type, protocol)){
+        for(auto i : res){
+            auto v = std::dynamic_pointer_cast<IPAddress>(i);
+            if(v){
+                return v;
+            }
+        }
+    }
+    return nullptr;
+}
+
+template<class T>
+static uint32_t CountBytes(T addr){
+    uint32_t rt = 0;
+    for(; addr; ++rt){
+        addr &= addr - 1;
+    }
+    return rt;
+}
+
+//getifaddrs是一个用于获取系统网络接口信息的函数，用来引用系统中的所有网络接口及其地址信息，例如 IP 地址、子网掩码等。
+bool Address::GetInterfaceAddress(std::multimap<std::string, std::pair<Address::ptr, uint32_t>> &result, 
+                                  int family){
+    ifaddrs *next, *results;
+    if(getifaddrs(&results) != 0){
+        SYLAR_LOG_ERROR(g_logger) << "Address::GetInterfaceAddress getifaddrs error" 
+                                  << ", errstr = " << strerror(errno);
+        return false;
+    }
+    try{
+        for(next = results; next; next = next->ifa_next){
+            Address::ptr addr;
+            uint32_t prefix_len = ~0u;
+            if(family != AF_UNSPEC && next->ifa_addr->sa_family != family){
+                continue;
+            }
+            switch(next->ifa_addr->sa_family){
+                case AF_INET:
+                    {
+                        addr = Create(next->ifa_addr, sizeof(sockaddr_in));
+                        uint32_t netmask = ((sockaddr_in*)next->ifa_addr)->sin_addr.s_addr;
+                        prefix_len += CountBytes(netmask);
+                    }
+                    break;
+                case AF_INET6:
+                    {
+                        addr = Create(next->ifa_addr, sizeof(sockaddr_in6));
+                        in6_addr &netmask = ((sockaddr_in6*)next->ifa_addr)->sin6_addr;
+                        prefix_len = 0;
+                        for(size_t i = 0; i < 16; ++i){
+                            prefix_len += CountBytes(netmask.s6_addr[i]);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            if(addr){
+                result.insert(std::make_pair(next->ifa_name, std::make_pair(addr, prefix_len)));
+            }
+        }
+    }catch(...){
+        SYLAR_LOG_ERROR(g_logger) << "Address::GetInterfaceAddress exception";
+        freeifaddrs(results);
+        return false;
+    }
+    freeifaddrs(results);
+    return true;
+}     
+
+bool Address::GetInterfaceAddress(std::vector<std::pair<Address::ptr, uint32_t>> &result, const std::string &iface, 
+                         int family){
+    if(!iface.empty() || iface == "*"){
+        if(family == AF_INET || family == AF_UNSPEC){
+            result.push_back(std::make_pair(Address::ptr(new IPV4Address), 0u));
+        }
+        if(family == AF_INET6 || family == AF_UNSPEC){
+            result.push_back(std::make_pair(Address::ptr(new IPV6Address), 0u));
+        }
+        return true;
+    }
+    std::multimap<std::string, std::pair<Address::ptr, uint32_t>> results;
+    if(!GetInterfaceAddress(results, family)){
+        return false;
+    }
+    auto it = results.equal_range(iface);
+    for(auto i = it.first; i != it.second; ++i){
+        result.push_back(i->second);
+    }
+    return true;
+}  
 
 int Address::getFamily() const {
     return getAddr()->sa_family;
@@ -71,7 +237,7 @@ bool Address::operator!=(const Address& rhs) const {
 }
 
 //getaddrinfo 用于域名解析和套接字地址信息获取,将主机名（如域名）或服务名（如端口号）转换为一个或多个 sockaddr 结构体可直接用于创建和连接套接字。
-//node（域名或IP地址)  service（服务名或端口号） hints（地址信息提示） res（返回结果）
+//node(域名或IP地址)  service(服务名或端口号) hints（地址信息提示） res（返回结果）
 IPAddress::ptr IPAddress::Create(const char* addr, uint16_t port){
     addrinfo hints, *res;
     memset(&hints, 0, sizeof(addrinfo));

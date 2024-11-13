@@ -8,14 +8,32 @@
 #include <sys/un.h>
 #include <string>
 #include <iostream>
+#include <vector>
+#include <map>
 
 namespace sylar{
+
+class IPAddress;
 
 class Address {
 public:
     typedef std::shared_ptr<Address> ptr;
-
+    //根据sockaddr的协议类型创建ipv4/6、unknow地址的对象
     static Address::ptr Create(const sockaddr* addr, socklen_t addrlen);
+
+    //通过host地址(域名或IP地址)返回对应条件的Address：getaddrinfo
+    static bool Lookup(std::vector<Address::ptr>& result, const std::string& host,
+                       int family = AF_UNSPEC, int type = 0, int protocol = 0);
+    static Address::ptr LookupAny(const std::string& host, int family = AF_UNSPEC, 
+                                  int type = 0, int protocol = 0);    
+    static std::shared_ptr<IPAddress> LookupAnyIPAddress(const std::string& host, int family = AF_UNSPEC, 
+                                  int type = 0, int protocol = 0); 
+
+    //返回 （所有）指定 网卡的 （网卡名、）地址、子网掩码：getifaddrs
+    static bool GetInterfaceAddress(std::multimap<std::string, std::pair<Address::ptr, uint32_t>> &result,
+                                    int family);     
+    static bool GetInterfaceAddress(std::vector<std::pair<Address::ptr, uint32_t>> &result,
+                                    const std::string &iface, int family);      
 
     virtual ~Address(){};
 
@@ -24,8 +42,9 @@ public:
     virtual const sockaddr* getAddr() const = 0;
     virtual const socklen_t getAddrLen() const = 0;
 
+    //可读性输出流
     virtual std::ostream& insert(std::ostream& os) const = 0;
-    std::string toString();
+    std::string toString();                 //利用insert返回可读性字符串
 
     bool operator<(const Address& rhs) const;
     bool operator==(const Address& rhs) const;
@@ -37,7 +56,8 @@ public:
     typedef std::shared_ptr<IPAddress> ptr;
 
     static IPAddress::ptr Create(const char* addr, uint16_t port = 0);
-
+    
+    //根据子网掩码长度prefix_len返回广播、网络或子网掩码地址
     virtual IPAddress::ptr broadcaseAddress(uint32_t prefix_len) = 0;
     virtual IPAddress::ptr networkAddress(uint32_t prefix_len) = 0;
     virtual IPAddress::ptr subnetMask(uint32_t prefix_len) = 0;

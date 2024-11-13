@@ -5,6 +5,12 @@ CMakeFiles/my_sylar.dir/my_sylar/address.cpp.o
  /home/jerry/mydir/project_server/my_sylar/address.cpp
  /home/jerry/mydir/project_server/my_sylar/address.h
  /home/jerry/mydir/project_server/my_sylar/endian.h
+ /home/jerry/mydir/project_server/my_sylar/fiber.h
+ /home/jerry/mydir/project_server/my_sylar/log.h
+ /home/jerry/mydir/project_server/my_sylar/noncopyable.h
+ /home/jerry/mydir/project_server/my_sylar/singleton.h
+ /home/jerry/mydir/project_server/my_sylar/thread.h
+ /home/jerry/mydir/project_server/my_sylar/util.h
 CMakeFiles/my_sylar.dir/my_sylar/config.cpp.o
  /home/jerry/mydir/project_server/my_sylar/config.cpp
  /home/jerry/mydir/project_server/my_sylar/config.h
