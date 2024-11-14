@@ -21,7 +21,7 @@ public:
     //根据sockaddr的协议类型创建ipv4/6、unknow地址的对象
     static Address::ptr Create(const sockaddr* addr, socklen_t addrlen);
 
-    //通过host地址(域名或IP地址)返回对应条件的Address：getaddrinfo
+    //通过host地址(域名或IP地址)返回对应条件的Address：getaddrinfo (相当于做域名解析)
     static bool Lookup(std::vector<Address::ptr>& result, const std::string& host,
                        int family = AF_UNSPEC, int type = 0, int protocol = 0);
     static Address::ptr LookupAny(const std::string& host, int family = AF_UNSPEC, 
@@ -29,7 +29,7 @@ public:
     static std::shared_ptr<IPAddress> LookupAnyIPAddress(const std::string& host, int family = AF_UNSPEC, 
                                   int type = 0, int protocol = 0); 
 
-    //返回 （所有）指定 网卡的 （网卡名、）地址、子网掩码：getifaddrs
+    //返回 （所有）指定 网卡的 （网卡名、）地址、子网掩码长度：getifaddrs
     static bool GetInterfaceAddress(std::multimap<std::string, std::pair<Address::ptr, uint32_t>> &result,
                                     int family);     
     static bool GetInterfaceAddress(std::vector<std::pair<Address::ptr, uint32_t>> &result,
@@ -54,7 +54,7 @@ public:
 class IPAddress : public Address {
 public:
     typedef std::shared_ptr<IPAddress> ptr;
-
+    //getaddrinfo允许通过域名创建
     static IPAddress::ptr Create(const char* addr, uint16_t port = 0);
     
     //根据子网掩码长度prefix_len返回广播、网络或子网掩码地址
@@ -69,7 +69,7 @@ public:
 class IPV4Address : public IPAddress {
 public:
     typedef std::shared_ptr<IPV4Address> ptr;
-
+    //创建提供点分十进制形式的地址
     static IPAddress::ptr Create(const char* addr, uint16_t port = 0);
  
     IPV4Address(const sockaddr_in& addr);

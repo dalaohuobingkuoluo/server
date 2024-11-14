@@ -63,9 +63,10 @@ bool Address::Lookup(std::vector<Address::ptr> &result, const std::string &host,
             }
             node = host.substr(1, endipv6 - host.c_str() -1);
         }
+        // SYLAR_LOG_DEBUG(g_logger) << "host = " << node << ", service = " << service;
     }
     //node:service
-    if(!node.empty()){
+    if(!host.empty()){
         service = (const char*)memchr(host.c_str(), ':', host.size());
         if(service){
             if(service + 1 < bound){
@@ -76,8 +77,9 @@ bool Address::Lookup(std::vector<Address::ptr> &result, const std::string &host,
                                           << ") fail, host = node:service out of range";
                 return false;
             }
-            node = host.substr(0, service - host.c_str());
+            node = host.substr(0, service - host.c_str() - 1);
         }
+        // SYLAR_LOG_DEBUG(g_logger) << "host = " << node << ", service = " << service;
     }
     //无service字段
     if(node.empty()){
@@ -88,7 +90,7 @@ bool Address::Lookup(std::vector<Address::ptr> &result, const std::string &host,
     if(err){
         SYLAR_LOG_ERROR(g_logger) << "Address::Lookup(" << host << "," << family 
                                   << "," << type << "," << protocol 
-                                  << ") getaddrinfo fail, err = " << err << "errstr = "
+                                  << ") getaddrinfo fail, err = " << err << ", errstr = "
                                   << gai_strerror(err);
         return false;
     }
@@ -130,7 +132,7 @@ static uint32_t CountBytes(T addr){
     return rt;
 }
 
-//getifaddrs是一个用于获取系统网络接口信息的函数，用来引用系统中的所有网络接口及其地址信息，例如 IP 地址、子网掩码等。
+//getifaddrs是一个用于获取系统网络接口信息的函数，用来引用系统中的所有网络接口及其地址信息，例如 IP 地址、子网掩码长度等。
 bool Address::GetInterfaceAddress(std::multimap<std::string, std::pair<Address::ptr, uint32_t>> &result, 
                                   int family){
     ifaddrs *next, *results;
@@ -150,14 +152,14 @@ bool Address::GetInterfaceAddress(std::multimap<std::string, std::pair<Address::
                 case AF_INET:
                     {
                         addr = Create(next->ifa_addr, sizeof(sockaddr_in));
-                        uint32_t netmask = ((sockaddr_in*)next->ifa_addr)->sin_addr.s_addr;
-                        prefix_len += CountBytes(netmask);
+                        uint32_t netmask = ((sockaddr_in*)next->ifa_netmask)->sin_addr.s_addr;
+                        prefix_len = CountBytes(netmask);
                     }
                     break;
                 case AF_INET6:
                     {
                         addr = Create(next->ifa_addr, sizeof(sockaddr_in6));
-                        in6_addr &netmask = ((sockaddr_in6*)next->ifa_addr)->sin6_addr;
+                        in6_addr &netmask = ((sockaddr_in6*)next->ifa_netmask)->sin6_addr;
                         prefix_len = 0;
                         for(size_t i = 0; i < 16; ++i){
                             prefix_len += CountBytes(netmask.s6_addr[i]);
@@ -242,11 +244,11 @@ IPAddress::ptr IPAddress::Create(const char* addr, uint16_t port){
     addrinfo hints, *res;
     memset(&hints, 0, sizeof(addrinfo));
 
-    hints.ai_flags = AI_NUMERICHOST;
+    // hints.ai_flags = AI_NUMERICHOST;
     hints.ai_family = AF_UNSPEC;
     int rt = getaddrinfo(addr, NULL, &hints, &res);
     if(rt){
-        SYLAR_LOG_ERROR(g_logger) << "IPVAddress::Create(" << addr << ","
+        SYLAR_LOG_ERROR(g_logger) << "IPAddress::Create(" << addr << ","
                                   << port << ") fail, rt = " << rt << ", errno = " << errno
                                   << ", strerror = " << strerror(errno);
         return nullptr;
@@ -301,7 +303,7 @@ const socklen_t IPV4Address::getAddrLen() const {
 }
 
 std::ostream& IPV4Address::insert(std::ostream& os) const {
-    uint32_t addr = m_addr.sin_addr.s_addr;
+    uint32_t addr = byteswapOnLittleEndian(m_addr.sin_addr.s_addr);
     os << ((addr >> 24) & 0xff) << "."
        << ((addr >> 16) & 0xff) << "."
        << ((addr >> 8) & 0xff) << "."

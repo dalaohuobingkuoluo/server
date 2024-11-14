@@ -12,7 +12,7 @@
 namespace sylar{
 
 static sylar::ConfigVar<int>::ptr g_tcp_connect_timeout 
-                = sylar::Config::Lookup("tcp.connect.timeout", 5000, "tcp connect timeout");
+                = sylar::Config::Lookup("tcp.connect.timeout", 1000, "tcp connect timeout");
 static thread_local bool t_hook_enable = false;     //线程级hook   
 static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
 
