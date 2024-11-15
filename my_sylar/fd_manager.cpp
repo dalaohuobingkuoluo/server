@@ -42,6 +42,7 @@ bool FdCtx::init(){
     m_isClose = false;
     return m_isInit;
 }
+//fstat 用于获取文件描述符对应文件的元数据信息。使用宏函数S_ISSOCK检查文件类型
 
 void FdCtx::setTimeout(int type, uint64_t v){
     if(type == SO_RCVTIMEO){
@@ -51,9 +52,7 @@ void FdCtx::setTimeout(int type, uint64_t v){
     }
 }
 
-/// @brief 
-/// @param type 
-/// @return 
+
 uint64_t FdCtx::getTimeout(int type){
     if(type == SO_RCVTIMEO){
         return m_recvTimeout;

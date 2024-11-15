@@ -39,7 +39,7 @@ void test_iface(){
 //resolve：误将ifa_netmask写成ifa_addr
 
 void test_ipv4(){
-    auto addr = sylar::IPAddress::Create("220.181.38.150");
+    auto addr = sylar::IPAddress::Create("www.sylar.top");
     if(addr){
         SYLAR_LOG_INFO(g_logger) << addr->toString();
         return;
