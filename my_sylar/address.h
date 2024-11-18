@@ -21,7 +21,7 @@ public:
     //根据sockaddr的协议类型创建ipv4/6、unknow地址的对象
     static Address::ptr Create(const sockaddr* addr, socklen_t addrlen);
 
-    //通过host地址(域名或IP地址)返回对应条件的Address：getaddrinfo (相当于做域名解析)
+    //通过host地址(域名或IP地址)返回对应条件的Address：getaddrinfo (相当于做域名解析)  注：AF_UNSPEC会导致解析很慢，实际使用时参数最好设置为AF_INET(6)
     static bool Lookup(std::vector<Address::ptr>& result, const std::string& host,
                        int family = AF_UNSPEC, int type = 0, int protocol = 0);
     static Address::ptr LookupAny(const std::string& host, int family = AF_UNSPEC, 
@@ -40,6 +40,7 @@ public:
     int getFamily() const;
 
     virtual const sockaddr* getAddr() const = 0;
+    virtual sockaddr* getAddr() = 0;
     virtual const socklen_t getAddrLen() const = 0;
 
     //可读性输出流
@@ -76,6 +77,7 @@ public:
     IPV4Address(uint32_t address = INADDR_ANY, uint16_t port = 0);
 
     const sockaddr* getAddr() const override;
+    sockaddr* getAddr() override;
     const socklen_t getAddrLen() const override;
     std::ostream& insert(std::ostream& os) const override;
 
@@ -103,6 +105,7 @@ public:
     IPV6Address(const uint8_t addr[16], uint16_t port = 0);
 
     const sockaddr* getAddr() const override;
+    sockaddr* getAddr() override;
     const socklen_t getAddrLen() const override;
     std::ostream& insert(std::ostream& os) const override;
 
@@ -125,7 +128,9 @@ public:
     UnixAddress(const std::string& path);
 
     const sockaddr* getAddr() const override;
+    sockaddr* getAddr() override;
     const socklen_t getAddrLen() const override;
+    void setAddrLen(const socklen_t &v) {m_addrlen = v;}
     std::ostream& insert(std::ostream& os) const override;
 private:
     sockaddr_un m_addr;
@@ -140,6 +145,7 @@ public:
     UnknowAddress(const sockaddr& addr);
 
     const sockaddr* getAddr() const override;
+    sockaddr* getAddr() override;
     const socklen_t getAddrLen() const override;
     std::ostream& insert(std::ostream& os) const override;
 private:

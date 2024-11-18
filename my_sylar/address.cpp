@@ -113,6 +113,10 @@ Address::ptr Address::LookupAny(const std::string& host, int family, int type, i
 std::shared_ptr<IPAddress> Address::LookupAnyIPAddress(const std::string& host, int family, int type, int protocol){
     std::vector<Address::ptr> res;
     if(Lookup(res, host, family, type, protocol)){
+        SYLAR_LOG_DEBUG(g_logger) << "LookupAnyIPAddress";
+        for(auto i : res){
+            SYLAR_LOG_DEBUG(g_logger) << i->toString();
+        }
         for(auto i : res){
             auto v = std::dynamic_pointer_cast<IPAddress>(i);
             if(v){
@@ -298,6 +302,10 @@ const sockaddr* IPV4Address::getAddr() const {
     return (sockaddr*)&m_addr;
 }
 
+sockaddr* IPV4Address::getAddr() {
+    return (sockaddr*)&m_addr;
+}
+
 const socklen_t IPV4Address::getAddrLen() const {
     return sizeof(m_addr);
 }
@@ -375,6 +383,10 @@ IPV6Address::IPV6Address(const uint8_t address[16], uint16_t port){
 }
 
 const sockaddr* IPV6Address::getAddr() const {
+    return (sockaddr*)&m_addr.sin6_addr;
+}
+
+sockaddr* IPV6Address::getAddr() {
     return (sockaddr*)&m_addr.sin6_addr;
 }
 
@@ -473,6 +485,10 @@ const sockaddr* UnixAddress::getAddr() const {
     return (sockaddr*)&m_addr;
 }
 
+sockaddr* UnixAddress::getAddr() {
+    return (sockaddr*)&m_addr;
+}
+
 const socklen_t UnixAddress::getAddrLen() const {
     return m_addrlen;
 }
@@ -496,6 +512,10 @@ UnknowAddress::UnknowAddress(const sockaddr& addr){
 }
 
 const sockaddr* UnknowAddress::getAddr() const {
+    return (sockaddr*)&m_addr;
+}
+
+sockaddr* UnknowAddress::getAddr() {
     return (sockaddr*)&m_addr;
 }
 

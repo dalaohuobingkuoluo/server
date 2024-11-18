@@ -3,7 +3,7 @@
 
 namespace sylar{
 
-sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
+static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
 
 pthread_t GetThreadId(){
     return syscall(SYS_gettid);  //sysgettid 获取的是内核中线程ID，而pthread_self 是posix描述的线程ID。

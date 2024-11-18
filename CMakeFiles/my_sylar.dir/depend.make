@@ -87,6 +87,22 @@ CMakeFiles/my_sylar.dir/my_sylar/scheduler.cpp.o: my_sylar/singleton.h
 CMakeFiles/my_sylar.dir/my_sylar/scheduler.cpp.o: my_sylar/thread.h
 CMakeFiles/my_sylar.dir/my_sylar/scheduler.cpp.o: my_sylar/util.h
 
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/address.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/fd_manager.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/fiber.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/hook.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/iomanager.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/log.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/macro.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/noncopyable.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/scheduler.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/singleton.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/socket.cpp
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/socket.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/thread.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/timer.h
+CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o: my_sylar/util.h
+
 CMakeFiles/my_sylar.dir/my_sylar/thread.cpp.o: my_sylar/fiber.h
 CMakeFiles/my_sylar.dir/my_sylar/thread.cpp.o: my_sylar/log.h
 CMakeFiles/my_sylar.dir/my_sylar/thread.cpp.o: my_sylar/noncopyable.h

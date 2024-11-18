@@ -13,6 +13,27 @@ public:
     typedef std::shared_ptr<Socket> ptr;
     typedef std::weak_ptr<Socket> wptr;
 
+    enum Type{
+        TCP = SOCK_STREAM,
+        UDP = SOCK_DGRAM,
+    };
+
+    enum Family{
+        IPV4 = AF_INET,
+        IPV6 = AF_INET6,
+        UNIX = AF_UNIX,
+    };
+
+    static Socket::ptr CreateTCP(Address::ptr addr);
+    static Socket::ptr CreateUDP(Address::ptr addr);
+    static Socket::ptr CreateTCPSocket();
+    static Socket::ptr CreateUDPSocket();
+    static Socket::ptr CreateTCPSocket6();
+    static Socket::ptr CreateUDPSocket6();
+    static Socket::ptr CreateUnixTCPSocket();
+    static Socket::ptr CreateUnixUDPSocket();
+
+    //构造函数并没有直接初始化socket句柄，需要在操作句柄时（connect、bind）调用initsock/newsock初始化句柄
     Socket(int family, int type, int protocol = 0);
     ~Socket();
 
@@ -58,9 +79,9 @@ public:
     int getSocket() const {return m_socket;}
 
     bool isConnected() const {return m_isConnected;}
-    bool isValid() const;
+    bool isValid() const;           //判断socket句柄是否有效
     int getError();
-    std::ostream dump(std::ostream &os) const;
+    std::ostream& dump(std::ostream &os) const;
 
     bool cancelRead();
     bool cancelWrite();

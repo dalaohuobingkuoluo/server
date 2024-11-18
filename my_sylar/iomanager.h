@@ -27,7 +27,7 @@ public:
     bool cancelAll(int fd);
 
     static IOManager* GetThis();
-public:
+private:
 
     struct FdContext{
         typedef Mutex MutexType;

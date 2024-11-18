@@ -5,7 +5,7 @@ static sylar::Logger::ptr g_logger = SYLAR_LOG_ROOT;
 
 void test(){
     std::vector<sylar::Address::ptr> res;
-    const std::string host = "wwww.baidu.com:80";
+    const std::string host = "wwww.baidu.com";
     SYLAR_LOG_INFO(g_logger) << "begin";
     bool rt = sylar::Address::Lookup(res, host, AF_UNSPEC, SOCK_STREAM);
     SYLAR_LOG_INFO(g_logger) << "end";
@@ -47,7 +47,8 @@ void test_ipv4(){
 }
 
 int main(){
+    test();
     // test_iface();
-    test_ipv4();
+    // test_ipv4();
     return 0;
 }

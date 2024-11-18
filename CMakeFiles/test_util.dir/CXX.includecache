@@ -6,6 +6,26 @@
 
 #IncludeRegexTransform: 
 
+/home/jerry/mydir/project_server/my_sylar/address.h
+sys/socket.h
+-
+memory
+-
+sys/types.h
+-
+arpa/inet.h
+-
+sys/un.h
+-
+string
+-
+iostream
+-
+vector
+-
+map
+-
+
 /home/jerry/mydir/project_server/my_sylar/config.h
 memory
 -
@@ -137,6 +157,8 @@ scheduler.h
 /home/jerry/mydir/project_server/my_sylar/scheduler.h
 iomanager.h
 /home/jerry/mydir/project_server/my_sylar/iomanager.h
+address.h
+/home/jerry/mydir/project_server/my_sylar/address.h
 
 /home/jerry/mydir/project_server/my_sylar/thread.h
 thread
