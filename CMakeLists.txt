@@ -17,6 +17,7 @@ set(LIB_SRC
     my_sylar/fd_manager.cpp
     my_sylar/address.cpp
     my_sylar/socket.cpp
+    my_sylar/bytearray.cpp
     )
 
 add_library(my_sylar SHARED ${LIB_SRC})
