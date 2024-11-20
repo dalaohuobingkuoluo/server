@@ -6,40 +6,30 @@
 
 #IncludeRegexTransform: 
 
-/home/jerry/mydir/project_server/my_sylar/address.cpp
-address.h
-/home/jerry/mydir/project_server/my_sylar/address.h
+/home/jerry/mydir/project_server/my_sylar/bytearray.cpp
+bytearray.h
+/home/jerry/mydir/project_server/my_sylar/bytearray.h
 endian.h
 /home/jerry/mydir/project_server/my_sylar/endian.h
+string.h
+-
+fstream
+-
+iomanip
+-
 log.h
 /home/jerry/mydir/project_server/my_sylar/log.h
-sstream
--
-algorithm
--
-netdb.h
--
-ifaddrs.h
--
 
-/home/jerry/mydir/project_server/my_sylar/address.h
-sys/socket.h
--
+/home/jerry/mydir/project_server/my_sylar/bytearray.h
 memory
--
-sys/types.h
--
-arpa/inet.h
--
-sys/un.h
 -
 string
 -
-iostream
+stdint.h
+-
+sys/socket.h
 -
 vector
--
-map
 -
 
 /home/jerry/mydir/project_server/my_sylar/endian.h

@@ -4,6 +4,8 @@
 #include <memory>
 #include <string>
 #include <stdint.h>
+#include <sys/socket.h>
+#include <vector>
 
 namespace sylar{
 
@@ -70,7 +72,7 @@ public:
     std::string readStringF64();
     std::string readStringVint();
 
-    //内部操作
+    //内部操作，非const的读写都会修改m_position和m_cur的位置
     void clear();
     void write(const void *buf, size_t s);
     void read(void *buf, size_t s);
@@ -79,8 +81,9 @@ public:
     size_t getPosition() const {return m_position;}
     void setPosition(size_t s);
     size_t getBaseSize() const {return m_baseSize;}
-    size_t getReadSize() const;
-
+    size_t getReadSize() const {return m_size - m_position;}
+    size_t getSize() const {return m_size;}
+    //读写文件不修改m_position位置
     bool writeToFile(const std::string &path) const;
     bool readFromFile(const std::string &path);
 
@@ -89,13 +92,18 @@ public:
 
     std::string toString() const;
     std::string toHexString() const;
+
+    //仅根据len使得iovec指向可读或写的位置以及设置长度，而非真正写入或读取也不修改m_position
+    uint64_t getReadBuffers(std::vector<iovec> &bufs, uint64_t len) const;
+    uint64_t getReadBuffers(std::vector<iovec> &bufs, uint64_t len, uint64_t position) const;
+    uint64_t getWriteBuffers(std::vector<iovec> &bufs, uint64_t len);       //需要扩容
 private:
     void addCapacity(size_t s);
     size_t getCapacity() const {return m_capacity - m_position;}        //获取当前的可写入容量
 private:
     size_t m_baseSize;      //每个数据块大小
     size_t m_capacity;      //总容量
-    size_t m_position;      //当前操作位置
+    size_t m_position;      //当前操作位置,由于read、write共享该参数，使用时需注意重置防止意外错误
     size_t m_size;          //当前总数据大小
     int8_t m_endian;
     Node *m_root;

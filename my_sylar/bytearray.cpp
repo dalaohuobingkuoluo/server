@@ -10,11 +10,11 @@ namespace sylar{
 static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
 
 ByteArray::Node::Node(size_t s)
-    : ptr(new char[s]), size(s), next(nullptr) {
+    : ptr(new char[s]), next(nullptr), size(s) {
 }
 
 ByteArray::Node::Node()
-    : ptr(nullptr), size(0), next(nullptr) {
+    : ptr(nullptr), next(nullptr), size(0) {
 }
 
 ByteArray::Node::~Node(){
@@ -104,7 +104,7 @@ void ByteArray::writeFuint64(uint64_t v){
 template<class T>
 static typename std::make_unsigned<T>::type EncodeZigzag(const T &v){
     static_assert(std::is_signed<T>::value, "class T must be a signed type");
-    using UnsignedT = std::make_unsigned<T>::type;
+    using UnsignedT = typename std::make_unsigned<T>::type;
     if(v < 0){
         return (UnsignedT)(-v) * 2 - 1;
     }else{
@@ -231,7 +231,7 @@ uint64_t ByteArray::readFuint64(){
 template<class T>
 static typename std::make_signed<T>::type DecodeZigzag(const T &v){
     static_assert(std::is_unsigned<T>::value, "class T must be a unsigned type");
-    using SignedT = std::make_signed<T>::type;
+    using SignedT = typename std::make_signed<T>::type;
     return (SignedT)((v >> 1) ^ -(v & 1));
 }
 
@@ -330,22 +330,22 @@ void ByteArray::clear(){
     m_root->next = nullptr; 
 }
 
-size_t ByteArray::getReadSize() const{
-    size_t rds = m_size - m_position;
-    size_t real_rds = 0;
-    Node *tmp = m_cur;
-    while(tmp->next){
-        real_rds += tmp->size;
-        tmp = tmp->next;
-    }
-    if(real_rds == rds){
-        return real_rds;
-    }else{
-        SYLAR_LOG_ERROR(g_logger) << "getReadSize fail, read_size = " << rds 
-                                  << ", real_read_size = " << real_rds << ", Node chain error";
-        throw std::runtime_error("Node chain error in getReadSize");
-    }
-}
+// size_t ByteArray::getReadSize() const{
+//     size_t rds = m_size - m_position;
+//     size_t real_rds = 0;
+//     Node *tmp = m_cur;
+//     while(tmp->next){
+//         real_rds += tmp->size;
+//         tmp = tmp->next;
+//     }
+//     if(real_rds == rds){
+//         return real_rds;
+//     }else{
+//         SYLAR_LOG_ERROR(g_logger) << "getReadSize fail, read_size = " << rds 
+//                                   << ", real_read_size = " << real_rds << ", Node chain error";
+//         throw std::runtime_error("Node chain error in getReadSize");
+//     }
+// }
 
 void ByteArray::write(const void *buf, size_t s){
     if(s == 0){
@@ -373,7 +373,7 @@ void ByteArray::write(const void *buf, size_t s){
             ncap = m_cur->size;
         }
     }
-    if(m_position >= m_size){
+    if(m_position > m_size){
         m_size = m_position;
     }
 }
@@ -383,6 +383,8 @@ void ByteArray::read(void *buf, size_t s){
         return;
     }
     if(s > getReadSize()){
+        SYLAR_LOG_ERROR(g_logger) << "read_size = " << s << ", getReadSize = " << getReadSize() 
+                                  << ", not enough len to read";
         throw std::out_of_range("not enough len to read");
     }
     if(!m_cur){
@@ -416,7 +418,9 @@ void ByteArray::read(void *buf, size_t s, size_t position) const{
     if(s == 0){
         return;
     }
-    if(s > getReadSize()){
+    if(s > (m_size - position)){
+        SYLAR_LOG_ERROR(g_logger) << "read_size = " << s << ", m_size - position = " << m_size - position 
+                                  << ", not enough len to read";
         throw std::out_of_range("not enough len to read");
     }
     if(!m_cur){
@@ -431,9 +435,6 @@ void ByteArray::read(void *buf, size_t s, size_t position) const{
         if(s <= ncap){
             memcpy((char*)buf + bpos, cur->ptr + npos, s);
             if(npos + s == cur->size){
-                if (!cur->next) {
-                    throw std::runtime_error("Unexpected end of chain while read");
-                }
                 cur = cur->next;
             }
             position += s;
@@ -451,10 +452,15 @@ void ByteArray::read(void *buf, size_t s, size_t position) const{
 }
 
 void ByteArray::setPosition(size_t s){
-    if(s > m_size){
+    if(s > m_capacity){
+        SYLAR_LOG_ERROR(g_logger) << "set_position = " << s << ", m_capacity = " << m_capacity
+                                  << "setPosition out of range";
         throw std::out_of_range("setPosition out of range");
     }
     m_position = s;
+    if(m_position > m_size){
+        m_size = m_position;
+    }
     m_cur = m_root;
     while(m_cur && s >= m_cur->size){
         s -= m_cur->size;
@@ -547,6 +553,105 @@ std::string ByteArray::toHexString() const {
         ss << std::setw(2) << std::setfill('0') << std::hex 
            << (int)(uint8_t)str[i] << " ";
     }
+    return ss.str();
+}
+
+uint64_t ByteArray::getReadBuffers(std::vector<iovec> &bufs, uint64_t len) const{
+    len = len > getReadSize() ? getReadSize() : len;
+    if(len == 0){
+        return 0;
+    }
+    size_t npos = m_position % m_baseSize;
+    iovec iov;
+    uint64_t size = len;
+    size_t ncap = m_cur->size - npos;
+    Node *cur = m_cur;
+    while(len > 0){
+        if(!cur){
+            SYLAR_LOG_ERROR(g_logger) << "getReadBuffers(len=" << len
+                                      <<") error, want to read but no Node";
+            throw std::runtime_error("Unexpected end of chain while getReadBuffers");
+        }
+        if(len <= ncap){
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = len;
+            len = 0;
+        }else{
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = ncap;
+            npos = 0;
+            len -= ncap;
+            cur = cur->next;
+            ncap = cur->size;
+        }
+        bufs.push_back(iov);
+    }
+    return size;
+}
+
+uint64_t ByteArray::getReadBuffers(std::vector<iovec> &bufs, uint64_t len, uint64_t position) const{
+    len = len > getReadSize() ? getReadSize() : len;
+    if(len == 0){
+        return 0;
+    }
+    Node *cur = m_root;
+    for(size_t count = position / m_baseSize; count > 0; --count){
+        cur = cur->next;
+    }
+    size_t npos = position % m_baseSize;
+    iovec iov;
+    uint64_t size = len;
+    size_t ncap = cur->size - npos;
+    
+    while(len > 0){
+        if(!cur){
+            SYLAR_LOG_ERROR(g_logger) << "getReadBuffers(len=" << len << ", position=" << position
+                                      <<") error, want to read but no Node";
+            throw std::runtime_error("Unexpected end of chain while getReadBuffers");
+        }
+        if(len <= ncap){
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = len;
+            len = 0;
+        }else{
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = ncap;
+            npos = 0;
+            len -= ncap;
+            cur = cur->next;
+            ncap = cur->size;
+        }
+        bufs.push_back(iov);
+    }
+    return size;
+}
+
+uint64_t ByteArray::getWriteBuffers(std::vector<iovec> &bufs, uint64_t len){
+    if(len == 0){
+        return 0;
+    }
+    addCapacity(len);
+    uint64_t size = len;
+    Node *cur = m_cur;
+    size_t npos = m_position % m_baseSize;
+    size_t ncap = cur->size - npos;
+    iovec iov;
+    while(len > 0){
+        if(len <= ncap){
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = len;
+            len = 0;
+        }else{
+            iov.iov_base = cur->ptr + npos;
+            iov.iov_len = ncap;
+            len -= ncap;
+            npos = 0;
+            cur = cur->next;
+            ncap = cur->size;
+        }   
+        bufs.push_back(iov);
+    }
+    return size;
 }
 
 } 

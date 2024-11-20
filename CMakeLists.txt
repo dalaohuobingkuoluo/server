@@ -68,5 +68,9 @@ add_executable(test_socket tests/test_socket.cc)
 #add_dependencies(test_thread my_sylar)
 target_link_libraries(test_socket ${LIBS})
 
+add_executable(test_bytearray tests/test_bytearray.cc)
+#add_dependencies(test_thread my_sylar)
+target_link_libraries(test_bytearray ${LIBS})
+
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
