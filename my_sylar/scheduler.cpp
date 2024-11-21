@@ -151,6 +151,9 @@ namespace sylar{
                     }
                     SYLAR_ASSERT(it->fiber || it->cb);
                     //协程正在执行
+                    // [BUG FIX]: hook IO相关的系统调用时，在检测到IO未就绪的情况下，会先添加对应的读写事件，再yield当前协程，等IO就绪后再resume当前协程
+                    // 多线程高并发情境下，有可能发生刚添加事件就被触发的情况，如果此时当前协程还未来得及yield，则这里就有可能出现协程状态仍为RUNNING的情况
+                    // 这里简单地跳过这种情况，以损失一点性能为代价，否则整个协程框架都要大改
                     if(it->fiber && it->fiber->getState() == Fiber::EXEC){
                         ++it;
                         continue;
