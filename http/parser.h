@@ -1,5 +1,9 @@
-#include "httpclient_parser.h"
+#ifndef __SYLAR_HTTP_PARSER_H__
+#define __SYLAR_HTTP_PARSER_H__
+
 #include "http.h"
+#include "http11_parser.h"
+#include "httpclient_parser.h"
 
 namespace sylar{
 namespace http{
@@ -9,13 +13,18 @@ public:
   typedef std::shared_ptr<HttpRequestParser> ptr;
   HttpRequestParser();
 
-  int isFinished() const;
-  int hasError() const;
-  size_t execute(const char* data, size_t len, size_t off);
+  int isFinished();
+  int hasError();
+  size_t execute(char* data, size_t len, size_t off = 0);
+
+  HttpRequest::ptr getData() const { return m_data;}
+  void setError(int e) {m_error = e;}
 private:
   http_parser m_parser;
-  int m_error;
-  HttpRequest::ptr m_request;
+  //1000: invalid method
+  //1001: invalid version
+  int m_error = 0;
+  HttpRequest::ptr m_data;
 };
 
 class HttpResponseParser{
@@ -23,14 +32,19 @@ public:
   typedef std::shared_ptr<HttpResponseParser> ptr;
   HttpResponseParser();
 
-  int isFinished() const;
-  int hasError() const;
-  size_t execute(const char* data, size_t len, size_t off);
+  int isFinished();
+  int hasError();
+  size_t execute(char* data, size_t len, size_t off = 0);
+
+  HttpResponse::ptr getData() const {return m_data;}
+  void setError(int e) {m_error = e;}
 private:
   httpclient_parser m_parser;
   int m_error;
-  HttpResponse::ptr m_response;
+  HttpResponse::ptr m_data;
 };
 
 }
 }
+
+#endif

@@ -12,6 +12,21 @@ CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.o: http/http11_common.h
 CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.o: http/httpclient_parser.h
 CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.o: http/httpclient_parser.rl.cc
 
+CMakeFiles/my_sylar.dir/http/parser.cc.o: http/http.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: http/http11_common.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: http/http11_parser.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: http/httpclient_parser.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: http/parser.cc
+CMakeFiles/my_sylar.dir/http/parser.cc.o: http/parser.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: my_sylar/config.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: my_sylar/fiber.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: my_sylar/log.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: my_sylar/macro.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: my_sylar/noncopyable.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: my_sylar/singleton.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: my_sylar/thread.h
+CMakeFiles/my_sylar.dir/http/parser.cc.o: my_sylar/util.h
+
 CMakeFiles/my_sylar.dir/my_sylar/address.cpp.o: my_sylar/address.cpp
 CMakeFiles/my_sylar.dir/my_sylar/address.cpp.o: my_sylar/address.h
 CMakeFiles/my_sylar.dir/my_sylar/address.cpp.o: my_sylar/endian.h

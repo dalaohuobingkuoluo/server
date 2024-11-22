@@ -21,7 +21,7 @@ set(LIB_SRC
     http/http.cpp
     http/http11_parser.rl.cc
     http/httpclient_parser.rl.cc
-    http/parser.cpp
+    http/parser.cc
     )
 
 add_library(my_sylar SHARED ${LIB_SRC})

@@ -235,7 +235,7 @@ namespace sylar{
             RWMutex::ReadLock lock(m_mutex);
             return m_val;
         }
-
+        //通过setValue更新值时才触发监听回调
         void setValue(const T& val) {
             {
                 RWMutex::ReadLock lock(m_mutex);

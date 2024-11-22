@@ -7,7 +7,14 @@
 namespace sylar{
 
 FdCtx::FdCtx(int fd)
-    : m_fd(fd) {
+    : m_isInit(false), 
+      m_isSocket(false),
+      m_sysNonblock(false),              
+      m_userNonblock(false),             
+      m_isClose(false),
+      m_fd(fd),
+      m_recvTimeout(-1),
+      m_sendTimeout(-1) {
     init();
 }
 

@@ -12,6 +12,21 @@ CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.o
  /home/jerry/mydir/project_server/http/http11_common.h
  /home/jerry/mydir/project_server/http/httpclient_parser.h
  /home/jerry/mydir/project_server/http/httpclient_parser.rl.cc
+CMakeFiles/my_sylar.dir/http/parser.cc.o
+ /home/jerry/mydir/project_server/http/http.h
+ /home/jerry/mydir/project_server/http/http11_common.h
+ /home/jerry/mydir/project_server/http/http11_parser.h
+ /home/jerry/mydir/project_server/http/httpclient_parser.h
+ /home/jerry/mydir/project_server/http/parser.cc
+ /home/jerry/mydir/project_server/http/parser.h
+ /home/jerry/mydir/project_server/my_sylar/config.h
+ /home/jerry/mydir/project_server/my_sylar/fiber.h
+ /home/jerry/mydir/project_server/my_sylar/log.h
+ /home/jerry/mydir/project_server/my_sylar/macro.h
+ /home/jerry/mydir/project_server/my_sylar/noncopyable.h
+ /home/jerry/mydir/project_server/my_sylar/singleton.h
+ /home/jerry/mydir/project_server/my_sylar/thread.h
+ /home/jerry/mydir/project_server/my_sylar/util.h
 CMakeFiles/my_sylar.dir/my_sylar/address.cpp.o
  /home/jerry/mydir/project_server/my_sylar/address.cpp
  /home/jerry/mydir/project_server/my_sylar/address.h
