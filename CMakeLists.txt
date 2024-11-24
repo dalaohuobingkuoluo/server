@@ -21,7 +21,7 @@ set(LIB_SRC
     http/http.cpp
     http/http11_parser.rl.cc
     http/httpclient_parser.rl.cc
-    http/parser.cc
+    http/http_parser.cpp
     )
 
 add_library(my_sylar SHARED ${LIB_SRC})
@@ -79,6 +79,10 @@ target_link_libraries(test_bytearray ${LIBS})
 add_executable(test_http tests/test_http.cc)
 #add_dependencies(test_thread my_sylar)
 target_link_libraries(test_http ${LIBS})
+
+add_executable(test_http_parser tests/test_http_parser.cc)
+#add_dependencies(test_thread my_sylar)
+target_link_libraries(test_http_parser ${LIBS})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

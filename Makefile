@@ -114,6 +114,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_http_parser
+
+# Build rule for target.
+test_http_parser: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_http_parser
+.PHONY : test_http_parser
+
+# fast build rule for target.
+test_http_parser/fast:
+	$(MAKE) -f CMakeFiles/test_http_parser.dir/build.make CMakeFiles/test_http_parser.dir/build
+.PHONY : test_http_parser/fast
+
+#=============================================================================
 # Target rules for targets named test_scheduler
 
 # Build rule for target.
@@ -336,6 +349,33 @@ http/http11_parser.rl.cc.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http11_parser.rl.cc.s
 .PHONY : http/http11_parser.rl.cc.s
 
+http/http_parser.o: http/http_parser.cpp.o
+
+.PHONY : http/http_parser.o
+
+# target to build an object file
+http/http_parser.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_parser.cpp.o
+.PHONY : http/http_parser.cpp.o
+
+http/http_parser.i: http/http_parser.cpp.i
+
+.PHONY : http/http_parser.i
+
+# target to preprocess a source file
+http/http_parser.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_parser.cpp.i
+.PHONY : http/http_parser.cpp.i
+
+http/http_parser.s: http/http_parser.cpp.s
+
+.PHONY : http/http_parser.s
+
+# target to generate assembly for a file
+http/http_parser.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_parser.cpp.s
+.PHONY : http/http_parser.cpp.s
+
 http/httpclient_parser.rl.o: http/httpclient_parser.rl.cc.o
 
 .PHONY : http/httpclient_parser.rl.o
@@ -362,33 +402,6 @@ http/httpclient_parser.rl.s: http/httpclient_parser.rl.cc.s
 http/httpclient_parser.rl.cc.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.s
 .PHONY : http/httpclient_parser.rl.cc.s
-
-http/parser.o: http/parser.cc.o
-
-.PHONY : http/parser.o
-
-# target to build an object file
-http/parser.cc.o:
-	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/parser.cc.o
-.PHONY : http/parser.cc.o
-
-http/parser.i: http/parser.cc.i
-
-.PHONY : http/parser.i
-
-# target to preprocess a source file
-http/parser.cc.i:
-	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/parser.cc.i
-.PHONY : http/parser.cc.i
-
-http/parser.s: http/parser.cc.s
-
-.PHONY : http/parser.s
-
-# target to generate assembly for a file
-http/parser.cc.s:
-	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/parser.cc.s
-.PHONY : http/parser.cc.s
 
 my_sylar/address.o: my_sylar/address.cpp.o
 
@@ -903,6 +916,33 @@ tests/test_http.cc.s:
 	$(MAKE) -f CMakeFiles/test_http.dir/build.make CMakeFiles/test_http.dir/tests/test_http.cc.s
 .PHONY : tests/test_http.cc.s
 
+tests/test_http_parser.o: tests/test_http_parser.cc.o
+
+.PHONY : tests/test_http_parser.o
+
+# target to build an object file
+tests/test_http_parser.cc.o:
+	$(MAKE) -f CMakeFiles/test_http_parser.dir/build.make CMakeFiles/test_http_parser.dir/tests/test_http_parser.cc.o
+.PHONY : tests/test_http_parser.cc.o
+
+tests/test_http_parser.i: tests/test_http_parser.cc.i
+
+.PHONY : tests/test_http_parser.i
+
+# target to preprocess a source file
+tests/test_http_parser.cc.i:
+	$(MAKE) -f CMakeFiles/test_http_parser.dir/build.make CMakeFiles/test_http_parser.dir/tests/test_http_parser.cc.i
+.PHONY : tests/test_http_parser.cc.i
+
+tests/test_http_parser.s: tests/test_http_parser.cc.s
+
+.PHONY : tests/test_http_parser.s
+
+# target to generate assembly for a file
+tests/test_http_parser.cc.s:
+	$(MAKE) -f CMakeFiles/test_http_parser.dir/build.make CMakeFiles/test_http_parser.dir/tests/test_http_parser.cc.s
+.PHONY : tests/test_http_parser.cc.s
+
 tests/test_iomanager.o: tests/test_iomanager.cc.o
 
 .PHONY : tests/test_iomanager.o
@@ -1073,6 +1113,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... test_http_parser"
 	@echo "... test_scheduler"
 	@echo "... test_config"
 	@echo "... my_sylar"
@@ -1092,12 +1133,12 @@ help:
 	@echo "... http/http11_parser.rl.o"
 	@echo "... http/http11_parser.rl.i"
 	@echo "... http/http11_parser.rl.s"
+	@echo "... http/http_parser.o"
+	@echo "... http/http_parser.i"
+	@echo "... http/http_parser.s"
 	@echo "... http/httpclient_parser.rl.o"
 	@echo "... http/httpclient_parser.rl.i"
 	@echo "... http/httpclient_parser.rl.s"
-	@echo "... http/parser.o"
-	@echo "... http/parser.i"
-	@echo "... http/parser.s"
 	@echo "... my_sylar/address.o"
 	@echo "... my_sylar/address.i"
 	@echo "... my_sylar/address.s"
@@ -1155,6 +1196,9 @@ help:
 	@echo "... tests/test_http.o"
 	@echo "... tests/test_http.i"
 	@echo "... tests/test_http.s"
+	@echo "... tests/test_http_parser.o"
+	@echo "... tests/test_http_parser.i"
+	@echo "... tests/test_http_parser.s"
 	@echo "... tests/test_iomanager.o"
 	@echo "... tests/test_iomanager.i"
 	@echo "... tests/test_iomanager.s"

@@ -132,7 +132,7 @@ bool HttpRequest::hasCookie(const std::string& key, std::string* val){
     return true;
 }
 
-std::ostream& HttpRequest::dump(std::ostream &os){
+std::ostream& HttpRequest::dump(std::ostream &os) const{
     //GET /uri?query#frag HTTP/1.1
     //Host: wwww.sylar.top
     //
@@ -156,6 +156,12 @@ std::ostream& HttpRequest::dump(std::ostream &os){
         os << "\r\n";
     }
     return os;    
+}
+
+std::string HttpRequest::toString() const{
+    std::stringstream ss;
+    dump(ss);
+    return ss.str();
 }
 
 HttpResponse::HttpResponse(uint8_t version, bool close)
@@ -194,6 +200,12 @@ std::ostream& HttpResponse::dump(std::ostream& os) const{
         os << "\r\n";
     }
     return os;  
+}
+
+std::string HttpResponse::toString() const{
+    std::stringstream ss;
+    dump(ss);
+    return ss.str();
 }
 
 }

@@ -211,7 +211,8 @@ public:
   bool hasParam(const std::string& key, std::string *val = nullptr);
   bool hasCookie(const std::string& key, std::string *val = nullptr);
 
-  std::ostream& dump(std::ostream &os);
+  std::ostream& dump(std::ostream &os) const;
+  std::string toString() const;
 
   template<class T>
   bool checkGetHeaderAs(const std::string &key, T &val, const T &def = T()){
@@ -219,8 +220,8 @@ public:
   }
 
   template<class T>
-  T GetHeaderAs(const std::string &key, T &val, const T &def = T()){
-    return checkGetAs(m_headers, key, def);
+  T getHeaderAs(const std::string &key, const T &def = T()){
+    return GetAs(m_headers, key, def);
   }
 
   template<class T>
@@ -229,8 +230,8 @@ public:
   }
 
   template<class T>
-  T GetParamAs(const std::string &key, T &val, const T &def = T()){
-    return checkGetAs(m_params, key, def);
+  T getParamAs(const std::string &key, const T &def = T()){
+    return GetAs(m_params, key, def);
   }
 
   template<class T>
@@ -239,8 +240,8 @@ public:
   }
 
   template<class T>
-  T GetCookieAs(const std::string &key, T &val, const T &def = T()){
-    return checkGetAs(m_cookies, key, def);
+  T getCookieAs(const std::string &key, const T &def = T()){
+    return GetAs(m_cookies, key, def);
   }
 
 private:
@@ -286,14 +287,15 @@ public:
   void delHeader(const std::string& key);
 
   std::ostream& dump(std::ostream& os) const;
+  std::string toString() const;
 
   template<class T>
-  bool checkGetHeadersAs(const std::string &key, T &val, const T &def = T()){
+  bool checkGetHeaderAs(const std::string &key, T &val, const T &def = T()){
     return checkGetAs(m_headers, key, val, def);
   }
 
   template<class T>
-  T getHeadersAs(const std::string &key, const T &def = T()){
+  T getHeaderAs(const std::string &key, const T &def = T()){
     return GetAs(m_headers, key, def);
   }
 
