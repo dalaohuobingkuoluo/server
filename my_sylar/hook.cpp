@@ -98,7 +98,7 @@ static ssize_t do_io(int fd, OriginFun fun, const char* hook_fun_name,
         return fun(fd, std::forward<Args>(args)...);
     }
 
-    SYLAR_LOG_DEBUG(g_logger) << "do_io hook <" << hook_fun_name << ">";
+    // SYLAR_LOG_DEBUG(g_logger) << "do_io hook <" << hook_fun_name << ">";
 
     uint64_t to = ctx->getTimeout(timeout_so);
     std::shared_ptr<timer_info> tinfo(new timer_info);
@@ -137,9 +137,9 @@ static ssize_t do_io(int fd, OriginFun fun, const char* hook_fun_name,
                 }
                 return -1;
             }else{
-                SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " before yiled";
+                // SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " before yiled";
                 sylar::Fiber::YiledToHold();             //从条件定时器timer返回或有数据返回115行注册的IO事件返回
-                SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " after yiled";
+                // SYLAR_LOG_DEBUG(g_logger) << hook_fun_name << " after yiled";
                 if(timer){
                     timer->cancel();
                 }

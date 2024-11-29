@@ -45,7 +45,7 @@ public:
 
     //可读性输出流
     virtual std::ostream& insert(std::ostream& os) const = 0;
-    std::string toString();                 //利用insert返回可读性字符串
+    std::string toString() const;                 //利用insert返回可读性字符串
 
     bool operator<(const Address& rhs) const;
     bool operator==(const Address& rhs) const;
@@ -130,7 +130,7 @@ public:
     const sockaddr* getAddr() const override;
     sockaddr* getAddr() override;
     const socklen_t getAddrLen() const override;
-    void setAddrLen(const socklen_t &v) {m_addrlen = v;}
+    void setAddrLen(const socklen_t v) {m_addrlen = v;}
     std::ostream& insert(std::ostream& os) const override;
 private:
     sockaddr_un m_addr;
@@ -151,6 +151,8 @@ public:
 private:
     sockaddr m_addr;
 };
+
+std::ostream& operator<<(std::ostream &os, const Address &addr);
 
 }
 

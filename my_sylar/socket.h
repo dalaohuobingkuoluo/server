@@ -82,6 +82,7 @@ public:
     bool isValid() const;           //判断socket句柄是否有效
     int getError();
     std::ostream& dump(std::ostream &os) const;
+    std::string toString() const;
 
     bool cancelRead();
     bool cancelWrite();

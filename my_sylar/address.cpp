@@ -212,7 +212,7 @@ int Address::getFamily() const {
     return getAddr()->sa_family;
 }
 
-std::string Address::toString() {
+std::string Address::toString() const {
     std::stringstream ss;
     insert(ss);
     return ss.str();
@@ -525,6 +525,10 @@ const socklen_t UnknowAddress::getAddrLen() const {
 
 std::ostream& UnknowAddress::insert(std::ostream& os) const {
     return os << "[UnknowAddress family = " << m_addr.sa_family << "]";
+}
+
+std::ostream& operator<<(std::ostream &os, const Address &addr){
+    return addr.insert(os);
 }
 
 }

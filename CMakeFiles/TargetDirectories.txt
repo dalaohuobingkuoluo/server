@@ -1,5 +1,7 @@
 /home/jerry/mydir/project_server/CMakeFiles/rebuild_cache.dir
 /home/jerry/mydir/project_server/CMakeFiles/edit_cache.dir
+/home/jerry/mydir/project_server/CMakeFiles/echo_server.dir
+/home/jerry/mydir/project_server/CMakeFiles/test_tcp_server.dir
 /home/jerry/mydir/project_server/CMakeFiles/test_http_parser.dir
 /home/jerry/mydir/project_server/CMakeFiles/test_scheduler.dir
 /home/jerry/mydir/project_server/CMakeFiles/test_config.dir

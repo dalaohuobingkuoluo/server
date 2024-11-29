@@ -73,7 +73,7 @@ private:
         if(ft.cb || ft.fiber){
             m_fibers.push_back(ft);
             //SYLAR_LOG_DEBUG(g_logger) << "add new fiber";
-            std::cout << "add new fiber" << std::endl;
+            // std::cout << "add new fiber" << std::endl;
         }
         return need_tickle;
     }

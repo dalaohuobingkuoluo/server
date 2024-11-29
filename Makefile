@@ -114,6 +114,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named echo_server
+
+# Build rule for target.
+echo_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 echo_server
+.PHONY : echo_server
+
+# fast build rule for target.
+echo_server/fast:
+	$(MAKE) -f CMakeFiles/echo_server.dir/build.make CMakeFiles/echo_server.dir/build
+.PHONY : echo_server/fast
+
+#=============================================================================
+# Target rules for targets named test_tcp_server
+
+# Build rule for target.
+test_tcp_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_tcp_server
+.PHONY : test_tcp_server
+
+# fast build rule for target.
+test_tcp_server/fast:
+	$(MAKE) -f CMakeFiles/test_tcp_server.dir/build.make CMakeFiles/test_tcp_server.dir/build
+.PHONY : test_tcp_server/fast
+
+#=============================================================================
 # Target rules for targets named test_http_parser
 
 # Build rule for target.
@@ -294,6 +320,33 @@ test_http: cmake_check_build_system
 test_http/fast:
 	$(MAKE) -f CMakeFiles/test_http.dir/build.make CMakeFiles/test_http.dir/build
 .PHONY : test_http/fast
+
+example/echo_server.o: example/echo_server.cc.o
+
+.PHONY : example/echo_server.o
+
+# target to build an object file
+example/echo_server.cc.o:
+	$(MAKE) -f CMakeFiles/echo_server.dir/build.make CMakeFiles/echo_server.dir/example/echo_server.cc.o
+.PHONY : example/echo_server.cc.o
+
+example/echo_server.i: example/echo_server.cc.i
+
+.PHONY : example/echo_server.i
+
+# target to preprocess a source file
+example/echo_server.cc.i:
+	$(MAKE) -f CMakeFiles/echo_server.dir/build.make CMakeFiles/echo_server.dir/example/echo_server.cc.i
+.PHONY : example/echo_server.cc.i
+
+example/echo_server.s: example/echo_server.cc.s
+
+.PHONY : example/echo_server.s
+
+# target to generate assembly for a file
+example/echo_server.cc.s:
+	$(MAKE) -f CMakeFiles/echo_server.dir/build.make CMakeFiles/echo_server.dir/example/echo_server.cc.s
+.PHONY : example/echo_server.cc.s
 
 http/http.o: http/http.cpp.o
 
@@ -673,6 +726,33 @@ my_sylar/socket.cpp.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.s
 .PHONY : my_sylar/socket.cpp.s
 
+my_sylar/tcp_server.o: my_sylar/tcp_server.cpp.o
+
+.PHONY : my_sylar/tcp_server.o
+
+# target to build an object file
+my_sylar/tcp_server.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.o
+.PHONY : my_sylar/tcp_server.cpp.o
+
+my_sylar/tcp_server.i: my_sylar/tcp_server.cpp.i
+
+.PHONY : my_sylar/tcp_server.i
+
+# target to preprocess a source file
+my_sylar/tcp_server.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.i
+.PHONY : my_sylar/tcp_server.cpp.i
+
+my_sylar/tcp_server.s: my_sylar/tcp_server.cpp.s
+
+.PHONY : my_sylar/tcp_server.s
+
+# target to generate assembly for a file
+my_sylar/tcp_server.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.s
+.PHONY : my_sylar/tcp_server.cpp.s
+
 my_sylar/thread.o: my_sylar/thread.cpp.o
 
 .PHONY : my_sylar/thread.o
@@ -1051,6 +1131,33 @@ tests/test_socket.cc.s:
 	$(MAKE) -f CMakeFiles/test_socket.dir/build.make CMakeFiles/test_socket.dir/tests/test_socket.cc.s
 .PHONY : tests/test_socket.cc.s
 
+tests/test_tcp_server.o: tests/test_tcp_server.cc.o
+
+.PHONY : tests/test_tcp_server.o
+
+# target to build an object file
+tests/test_tcp_server.cc.o:
+	$(MAKE) -f CMakeFiles/test_tcp_server.dir/build.make CMakeFiles/test_tcp_server.dir/tests/test_tcp_server.cc.o
+.PHONY : tests/test_tcp_server.cc.o
+
+tests/test_tcp_server.i: tests/test_tcp_server.cc.i
+
+.PHONY : tests/test_tcp_server.i
+
+# target to preprocess a source file
+tests/test_tcp_server.cc.i:
+	$(MAKE) -f CMakeFiles/test_tcp_server.dir/build.make CMakeFiles/test_tcp_server.dir/tests/test_tcp_server.cc.i
+.PHONY : tests/test_tcp_server.cc.i
+
+tests/test_tcp_server.s: tests/test_tcp_server.cc.s
+
+.PHONY : tests/test_tcp_server.s
+
+# target to generate assembly for a file
+tests/test_tcp_server.cc.s:
+	$(MAKE) -f CMakeFiles/test_tcp_server.dir/build.make CMakeFiles/test_tcp_server.dir/tests/test_tcp_server.cc.s
+.PHONY : tests/test_tcp_server.cc.s
+
 tests/test_thread.o: tests/test_thread.cc.o
 
 .PHONY : tests/test_thread.o
@@ -1113,6 +1220,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... echo_server"
+	@echo "... test_tcp_server"
 	@echo "... test_http_parser"
 	@echo "... test_scheduler"
 	@echo "... test_config"
@@ -1127,6 +1236,9 @@ help:
 	@echo "... test_hook"
 	@echo "... test_socket"
 	@echo "... test_http"
+	@echo "... example/echo_server.o"
+	@echo "... example/echo_server.i"
+	@echo "... example/echo_server.s"
 	@echo "... http/http.o"
 	@echo "... http/http.i"
 	@echo "... http/http.s"
@@ -1169,6 +1281,9 @@ help:
 	@echo "... my_sylar/socket.o"
 	@echo "... my_sylar/socket.i"
 	@echo "... my_sylar/socket.s"
+	@echo "... my_sylar/tcp_server.o"
+	@echo "... my_sylar/tcp_server.i"
+	@echo "... my_sylar/tcp_server.s"
 	@echo "... my_sylar/thread.o"
 	@echo "... my_sylar/thread.i"
 	@echo "... my_sylar/thread.s"
@@ -1211,6 +1326,9 @@ help:
 	@echo "... tests/test_socket.o"
 	@echo "... tests/test_socket.i"
 	@echo "... tests/test_socket.s"
+	@echo "... tests/test_tcp_server.o"
+	@echo "... tests/test_tcp_server.i"
+	@echo "... tests/test_tcp_server.s"
 	@echo "... tests/test_thread.o"
 	@echo "... tests/test_thread.i"
 	@echo "... tests/test_thread.s"

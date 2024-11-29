@@ -313,8 +313,9 @@ Address::ptr Socket::getRemoteAddress(){
         return Address::ptr(new UnknowAddress(m_family));
     }
     if(m_family == AF_UNIX){
-        UnixAddress::ptr addr = std::dynamic_pointer_cast<UnixAddress>(addr);
-        addr->setAddrLen(len);
+        UnixAddress::ptr uaddr = std::dynamic_pointer_cast<UnixAddress>(addr);
+        SYLAR_ASSERT2(uaddr != nullptr, "getRemoteAddress convert to unix_addr fail");
+        uaddr->setAddrLen(len);
     }
     m_remoteAddress = addr;
     return m_remoteAddress;
@@ -346,8 +347,10 @@ Address::ptr Socket::getLocalAddress(){
         return Address::ptr(new UnknowAddress(m_family));
     }
     if(m_family == AF_UNIX){
-        UnixAddress::ptr addr = std::dynamic_pointer_cast<UnixAddress>(addr);
-        addr->setAddrLen(len);
+        UnixAddress::ptr uaddr = std::dynamic_pointer_cast<UnixAddress>(addr);
+        SYLAR_ASSERT2(uaddr != nullptr, "getLocalAddress convert to unix_addr fail");
+        uaddr->setAddrLen(len);
+        // UnixAddress::ptr addr = std::dynamic_pointer_cast<UnixAddress>(addr);
     }
     m_localAddress = addr;
     return m_localAddress;
@@ -374,6 +377,12 @@ std::ostream& Socket::dump(std::ostream &os) const {
     }   
     os << "]"; 
     return os;
+}
+
+std::string Socket::toString() const {
+    std::stringstream ss;
+    dump(ss);
+    return ss.str();
 }
 
 bool Socket::cancelRead(){
