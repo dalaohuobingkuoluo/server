@@ -200,7 +200,9 @@ namespace sylar{
             cur->m_state = TERM;
         }catch(std::exception& ex){
             cur->m_state = EXCEPT;
-            SYLAR_LOG_ERROR(g_logger) << "Fiber Except : " << ex.what();
+            SYLAR_LOG_ERROR(g_logger) << "Fiber Except : " << ex.what() 
+                                      << ", fiber id = " << cur->getId()
+                                      << std::endl << sylar::BacktraceToString();
         }catch(...){
             cur->m_state = EXCEPT;
             SYLAR_LOG_ERROR(g_logger) << "Fiber Except" ;

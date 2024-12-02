@@ -16,6 +16,15 @@ static sylar::ConfigVar<uint64_t>::ptr g_http_request_body_size =
 static uint64_t s_http_request_buffer_size;
 static uint64_t s_http_request_body_size;
 
+uint64_t HttpRequestParser::getHttpRequestBufferSize(){
+    return s_http_request_buffer_size;
+}
+
+uint64_t HttpRequestParser::getHttpRequestBodySize(){
+    return s_http_request_body_size;
+}
+
+namespace{
 struct _RequestSizeInit{
     _RequestSizeInit(){
         s_http_request_buffer_size = g_http_request_buffer_size->getValue();
@@ -28,8 +37,9 @@ struct _RequestSizeInit{
         });
     };
 };
+static _RequestSizeInit _init;    
+}
 
-static _RequestSizeInit _init;
 
 void on_request_http_filed(void *data, const char *field, size_t flen, const char *value, size_t vlen){
     HttpRequestParser* parser = static_cast<HttpRequestParser*>(data);

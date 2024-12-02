@@ -23,6 +23,45 @@ CMakeFiles/my_sylar.dir/http/http_parser.cpp.o
  /home/jerry/mydir/project_server/my_sylar/singleton.h
  /home/jerry/mydir/project_server/my_sylar/thread.h
  /home/jerry/mydir/project_server/my_sylar/util.h
+CMakeFiles/my_sylar.dir/http/http_server.cpp.o
+ /home/jerry/mydir/project_server/http/http.h
+ /home/jerry/mydir/project_server/http/http_server.cpp
+ /home/jerry/mydir/project_server/http/http_server.h
+ /home/jerry/mydir/project_server/http/http_session.h
+ /home/jerry/mydir/project_server/my_sylar/address.h
+ /home/jerry/mydir/project_server/my_sylar/bytearray.h
+ /home/jerry/mydir/project_server/my_sylar/fd_manager.h
+ /home/jerry/mydir/project_server/my_sylar/fiber.h
+ /home/jerry/mydir/project_server/my_sylar/iomanager.h
+ /home/jerry/mydir/project_server/my_sylar/log.h
+ /home/jerry/mydir/project_server/my_sylar/noncopyable.h
+ /home/jerry/mydir/project_server/my_sylar/scheduler.h
+ /home/jerry/mydir/project_server/my_sylar/singleton.h
+ /home/jerry/mydir/project_server/my_sylar/socket.h
+ /home/jerry/mydir/project_server/my_sylar/stream.h
+ /home/jerry/mydir/project_server/my_sylar/tcp_server.h
+ /home/jerry/mydir/project_server/my_sylar/thread.h
+ /home/jerry/mydir/project_server/my_sylar/timer.h
+ /home/jerry/mydir/project_server/my_sylar/util.h
+CMakeFiles/my_sylar.dir/http/http_session.cpp.o
+ /home/jerry/mydir/project_server/http/http.h
+ /home/jerry/mydir/project_server/http/http11_common.h
+ /home/jerry/mydir/project_server/http/http11_parser.h
+ /home/jerry/mydir/project_server/http/http_parser.h
+ /home/jerry/mydir/project_server/http/http_session.cpp
+ /home/jerry/mydir/project_server/http/http_session.h
+ /home/jerry/mydir/project_server/http/httpclient_parser.h
+ /home/jerry/mydir/project_server/my_sylar/address.h
+ /home/jerry/mydir/project_server/my_sylar/bytearray.h
+ /home/jerry/mydir/project_server/my_sylar/fd_manager.h
+ /home/jerry/mydir/project_server/my_sylar/fiber.h
+ /home/jerry/mydir/project_server/my_sylar/log.h
+ /home/jerry/mydir/project_server/my_sylar/noncopyable.h
+ /home/jerry/mydir/project_server/my_sylar/singleton.h
+ /home/jerry/mydir/project_server/my_sylar/socket.h
+ /home/jerry/mydir/project_server/my_sylar/stream.h
+ /home/jerry/mydir/project_server/my_sylar/thread.h
+ /home/jerry/mydir/project_server/my_sylar/util.h
 CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.o
  /home/jerry/mydir/project_server/http/http11_common.h
  /home/jerry/mydir/project_server/http/httpclient_parser.h
@@ -139,6 +178,16 @@ CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.o
  /home/jerry/mydir/project_server/my_sylar/thread.h
  /home/jerry/mydir/project_server/my_sylar/timer.h
  /home/jerry/mydir/project_server/my_sylar/util.h
+CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.o
+ /home/jerry/mydir/project_server/my_sylar/address.h
+ /home/jerry/mydir/project_server/my_sylar/bytearray.h
+ /home/jerry/mydir/project_server/my_sylar/fd_manager.h
+ /home/jerry/mydir/project_server/my_sylar/noncopyable.h
+ /home/jerry/mydir/project_server/my_sylar/singleton.h
+ /home/jerry/mydir/project_server/my_sylar/socket.h
+ /home/jerry/mydir/project_server/my_sylar/stream.cpp
+ /home/jerry/mydir/project_server/my_sylar/stream.h
+ /home/jerry/mydir/project_server/my_sylar/thread.h
 CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.o
  /home/jerry/mydir/project_server/my_sylar/address.h
  /home/jerry/mydir/project_server/my_sylar/config.h

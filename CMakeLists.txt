@@ -23,6 +23,9 @@ set(LIB_SRC
     http/httpclient_parser.rl.cc
     http/http_parser.cpp
     my_sylar/tcp_server.cpp
+    my_sylar/stream.cpp
+    http/http_session.cpp
+    http/http_server.cpp
     )
 
 add_library(my_sylar SHARED ${LIB_SRC})
@@ -92,6 +95,10 @@ target_link_libraries(test_tcp_server ${LIBS})
 add_executable(echo_server example/echo_server.cc)
 #add_dependencies(test_thread my_sylar)
 target_link_libraries(echo_server ${LIBS})
+
+add_executable(test_http_server tests/test_http_server.cc)
+#add_dependencies(test_thread my_sylar)
+target_link_libraries(test_http_server ${LIBS})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

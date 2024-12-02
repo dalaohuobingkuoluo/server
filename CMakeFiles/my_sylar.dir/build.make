@@ -294,6 +294,45 @@ CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jerry/mydir/project_server/my_sylar/tcp_server.cpp -o CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.s
 
+CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.o: CMakeFiles/my_sylar.dir/flags.make
+CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.o: my_sylar/stream.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jerry/mydir/project_server/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.o -c /home/jerry/mydir/project_server/my_sylar/stream.cpp
+
+CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jerry/mydir/project_server/my_sylar/stream.cpp > CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.i
+
+CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jerry/mydir/project_server/my_sylar/stream.cpp -o CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.s
+
+CMakeFiles/my_sylar.dir/http/http_session.cpp.o: CMakeFiles/my_sylar.dir/flags.make
+CMakeFiles/my_sylar.dir/http/http_session.cpp.o: http/http_session.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jerry/mydir/project_server/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/my_sylar.dir/http/http_session.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/my_sylar.dir/http/http_session.cpp.o -c /home/jerry/mydir/project_server/http/http_session.cpp
+
+CMakeFiles/my_sylar.dir/http/http_session.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_sylar.dir/http/http_session.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jerry/mydir/project_server/http/http_session.cpp > CMakeFiles/my_sylar.dir/http/http_session.cpp.i
+
+CMakeFiles/my_sylar.dir/http/http_session.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_sylar.dir/http/http_session.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jerry/mydir/project_server/http/http_session.cpp -o CMakeFiles/my_sylar.dir/http/http_session.cpp.s
+
+CMakeFiles/my_sylar.dir/http/http_server.cpp.o: CMakeFiles/my_sylar.dir/flags.make
+CMakeFiles/my_sylar.dir/http/http_server.cpp.o: http/http_server.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/jerry/mydir/project_server/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/my_sylar.dir/http/http_server.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/my_sylar.dir/http/http_server.cpp.o -c /home/jerry/mydir/project_server/http/http_server.cpp
+
+CMakeFiles/my_sylar.dir/http/http_server.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/my_sylar.dir/http/http_server.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/jerry/mydir/project_server/http/http_server.cpp > CMakeFiles/my_sylar.dir/http/http_server.cpp.i
+
+CMakeFiles/my_sylar.dir/http/http_server.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/my_sylar.dir/http/http_server.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/jerry/mydir/project_server/http/http_server.cpp -o CMakeFiles/my_sylar.dir/http/http_server.cpp.s
+
 # Object files for target my_sylar
 my_sylar_OBJECTS = \
 "CMakeFiles/my_sylar.dir/my_sylar/log.cpp.o" \
@@ -313,7 +352,10 @@ my_sylar_OBJECTS = \
 "CMakeFiles/my_sylar.dir/http/http11_parser.rl.cc.o" \
 "CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.o" \
 "CMakeFiles/my_sylar.dir/http/http_parser.cpp.o" \
-"CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.o"
+"CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.o" \
+"CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.o" \
+"CMakeFiles/my_sylar.dir/http/http_session.cpp.o" \
+"CMakeFiles/my_sylar.dir/http/http_server.cpp.o"
 
 # External object files for target my_sylar
 my_sylar_EXTERNAL_OBJECTS =
@@ -336,9 +378,12 @@ lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/http/http11_parser.rl.cc.o
 lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.o
 lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/http/http_parser.cpp.o
 lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/my_sylar/tcp_server.cpp.o
+lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.o
+lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/http/http_session.cpp.o
+lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/http/http_server.cpp.o
 lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/build.make
 lib/libmy_sylar.so: CMakeFiles/my_sylar.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jerry/mydir/project_server/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Linking CXX shared library lib/libmy_sylar.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/jerry/mydir/project_server/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Linking CXX shared library lib/libmy_sylar.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/my_sylar.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

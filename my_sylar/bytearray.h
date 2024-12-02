@@ -93,7 +93,7 @@ public:
     std::string toString() const;
     std::string toHexString() const;
 
-    //仅根据len动态增加iovec并使得iovec指向可读或写的位置以及设置长度，而非真正写入或读取也不修改m_position
+    //仅根据len动态增加iovec并使得iovec指向Node块可读或写的位置以及设置长度，而非真正写入或读取也不修改m_position
     //当使用iovec写入时无法自动修改m_size因此要使用setPosition间接更新m_size
     uint64_t getReadBuffers(std::vector<iovec> &bufs, uint64_t len) const;
     uint64_t getReadBuffers(std::vector<iovec> &bufs, uint64_t len, uint64_t position) const;

@@ -15,11 +15,14 @@ public:
 
   int isFinished();
   int hasError();
-  size_t execute(char* data, size_t len, size_t off = 0);
+  size_t execute(char* data, size_t len, size_t off = 0);     //execute会将解析完的消息移除即将未解析的消息memmove缓冲区前面
 
   HttpRequest::ptr getData() const { return m_data;}
   void setError(int e) {m_error = e;}
   uint64_t getContentLen() const;
+
+  static uint64_t getHttpRequestBufferSize();
+  static uint64_t getHttpRequestBodySize();
 private:
   http_parser m_parser;
   //1000: invalid method

@@ -244,6 +244,19 @@ test_fiber/fast:
 .PHONY : test_fiber/fast
 
 #=============================================================================
+# Target rules for targets named test_http_server
+
+# Build rule for target.
+test_http_server: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_http_server
+.PHONY : test_http_server
+
+# fast build rule for target.
+test_http_server/fast:
+	$(MAKE) -f CMakeFiles/test_http_server.dir/build.make CMakeFiles/test_http_server.dir/build
+.PHONY : test_http_server/fast
+
+#=============================================================================
 # Target rules for targets named test_log
 
 # Build rule for target.
@@ -428,6 +441,60 @@ http/http_parser.s: http/http_parser.cpp.s
 http/http_parser.cpp.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_parser.cpp.s
 .PHONY : http/http_parser.cpp.s
+
+http/http_server.o: http/http_server.cpp.o
+
+.PHONY : http/http_server.o
+
+# target to build an object file
+http/http_server.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_server.cpp.o
+.PHONY : http/http_server.cpp.o
+
+http/http_server.i: http/http_server.cpp.i
+
+.PHONY : http/http_server.i
+
+# target to preprocess a source file
+http/http_server.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_server.cpp.i
+.PHONY : http/http_server.cpp.i
+
+http/http_server.s: http/http_server.cpp.s
+
+.PHONY : http/http_server.s
+
+# target to generate assembly for a file
+http/http_server.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_server.cpp.s
+.PHONY : http/http_server.cpp.s
+
+http/http_session.o: http/http_session.cpp.o
+
+.PHONY : http/http_session.o
+
+# target to build an object file
+http/http_session.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_session.cpp.o
+.PHONY : http/http_session.cpp.o
+
+http/http_session.i: http/http_session.cpp.i
+
+.PHONY : http/http_session.i
+
+# target to preprocess a source file
+http/http_session.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_session.cpp.i
+.PHONY : http/http_session.cpp.i
+
+http/http_session.s: http/http_session.cpp.s
+
+.PHONY : http/http_session.s
+
+# target to generate assembly for a file
+http/http_session.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/http_session.cpp.s
+.PHONY : http/http_session.cpp.s
 
 http/httpclient_parser.rl.o: http/httpclient_parser.rl.cc.o
 
@@ -726,6 +793,33 @@ my_sylar/socket.cpp.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/socket.cpp.s
 .PHONY : my_sylar/socket.cpp.s
 
+my_sylar/stream.o: my_sylar/stream.cpp.o
+
+.PHONY : my_sylar/stream.o
+
+# target to build an object file
+my_sylar/stream.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.o
+.PHONY : my_sylar/stream.cpp.o
+
+my_sylar/stream.i: my_sylar/stream.cpp.i
+
+.PHONY : my_sylar/stream.i
+
+# target to preprocess a source file
+my_sylar/stream.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.i
+.PHONY : my_sylar/stream.cpp.i
+
+my_sylar/stream.s: my_sylar/stream.cpp.s
+
+.PHONY : my_sylar/stream.s
+
+# target to generate assembly for a file
+my_sylar/stream.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/my_sylar/stream.cpp.s
+.PHONY : my_sylar/stream.cpp.s
+
 my_sylar/tcp_server.o: my_sylar/tcp_server.cpp.o
 
 .PHONY : my_sylar/tcp_server.o
@@ -1023,6 +1117,33 @@ tests/test_http_parser.cc.s:
 	$(MAKE) -f CMakeFiles/test_http_parser.dir/build.make CMakeFiles/test_http_parser.dir/tests/test_http_parser.cc.s
 .PHONY : tests/test_http_parser.cc.s
 
+tests/test_http_server.o: tests/test_http_server.cc.o
+
+.PHONY : tests/test_http_server.o
+
+# target to build an object file
+tests/test_http_server.cc.o:
+	$(MAKE) -f CMakeFiles/test_http_server.dir/build.make CMakeFiles/test_http_server.dir/tests/test_http_server.cc.o
+.PHONY : tests/test_http_server.cc.o
+
+tests/test_http_server.i: tests/test_http_server.cc.i
+
+.PHONY : tests/test_http_server.i
+
+# target to preprocess a source file
+tests/test_http_server.cc.i:
+	$(MAKE) -f CMakeFiles/test_http_server.dir/build.make CMakeFiles/test_http_server.dir/tests/test_http_server.cc.i
+.PHONY : tests/test_http_server.cc.i
+
+tests/test_http_server.s: tests/test_http_server.cc.s
+
+.PHONY : tests/test_http_server.s
+
+# target to generate assembly for a file
+tests/test_http_server.cc.s:
+	$(MAKE) -f CMakeFiles/test_http_server.dir/build.make CMakeFiles/test_http_server.dir/tests/test_http_server.cc.s
+.PHONY : tests/test_http_server.cc.s
+
 tests/test_iomanager.o: tests/test_iomanager.cc.o
 
 .PHONY : tests/test_iomanager.o
@@ -1230,6 +1351,7 @@ help:
 	@echo "... test_thread"
 	@echo "... test_util"
 	@echo "... test_fiber"
+	@echo "... test_http_server"
 	@echo "... test_log"
 	@echo "... test_address"
 	@echo "... test_iomanager"
@@ -1248,6 +1370,12 @@ help:
 	@echo "... http/http_parser.o"
 	@echo "... http/http_parser.i"
 	@echo "... http/http_parser.s"
+	@echo "... http/http_server.o"
+	@echo "... http/http_server.i"
+	@echo "... http/http_server.s"
+	@echo "... http/http_session.o"
+	@echo "... http/http_session.i"
+	@echo "... http/http_session.s"
 	@echo "... http/httpclient_parser.rl.o"
 	@echo "... http/httpclient_parser.rl.i"
 	@echo "... http/httpclient_parser.rl.s"
@@ -1281,6 +1409,9 @@ help:
 	@echo "... my_sylar/socket.o"
 	@echo "... my_sylar/socket.i"
 	@echo "... my_sylar/socket.s"
+	@echo "... my_sylar/stream.o"
+	@echo "... my_sylar/stream.i"
+	@echo "... my_sylar/stream.s"
 	@echo "... my_sylar/tcp_server.o"
 	@echo "... my_sylar/tcp_server.i"
 	@echo "... my_sylar/tcp_server.s"
@@ -1314,6 +1445,9 @@ help:
 	@echo "... tests/test_http_parser.o"
 	@echo "... tests/test_http_parser.i"
 	@echo "... tests/test_http_parser.s"
+	@echo "... tests/test_http_server.o"
+	@echo "... tests/test_http_server.i"
+	@echo "... tests/test_http_server.s"
 	@echo "... tests/test_iomanager.o"
 	@echo "... tests/test_iomanager.i"
 	@echo "... tests/test_iomanager.s"
