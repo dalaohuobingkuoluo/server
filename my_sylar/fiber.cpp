@@ -194,19 +194,19 @@ namespace sylar{
     void Fiber::MainFuncCaller(){
         Fiber::ptr cur = GetThis();
         SYLAR_ASSERT(cur);
-        try{
+        // try{
             cur->m_cb();
             cur->m_cb = nullptr;
             cur->m_state = TERM;
-        }catch(std::exception& ex){
-            cur->m_state = EXCEPT;
-            SYLAR_LOG_ERROR(g_logger) << "Fiber Except : " << ex.what() 
-                                      << ", fiber id = " << cur->getId()
-                                      << std::endl << sylar::BacktraceToString();
-        }catch(...){
-            cur->m_state = EXCEPT;
-            SYLAR_LOG_ERROR(g_logger) << "Fiber Except" ;
-        }
+        // }catch(std::exception& ex){
+        //     cur->m_state = EXCEPT;
+        //     SYLAR_LOG_ERROR(g_logger) << "Fiber Except : " << ex.what() 
+        //                               << ", fiber id = " << cur->getId()
+        //                               << std::endl << sylar::BacktraceToString();
+        // }catch(...){
+        //     cur->m_state = EXCEPT;
+        //     SYLAR_LOG_ERROR(g_logger) << "Fiber Except" ;
+        // }
         //Fiber::ptr cur = GetThis();使得智能指针加1，此时即使回到主协程cur仍在子协程栈上，
         //因此即使出作用域子协程其智能指针计数仍存在导致无法释放
         auto raw_ptr = cur.get();    

@@ -277,6 +277,12 @@ int http_parser_init(http_parser *parser) {
 size_t http_parser_execute(http_parser *parser, const char *buffer, size_t len, size_t off)  
 {
   if(len == 0) return 0;
+  //用于解决请求大于缓冲区长度导致无法一次性解析发生的段错误错误，同时触发新的解析错误但不影响程序运行（当某个头过长导致整个缓冲区丢弃时可能该缓冲区存在另一个头的部分值也被丢弃导致解析到的请求头键不完整）
+  parser->nread = 0;
+  parser->mark = 0;
+  parser->field_len = 0;
+  parser->field_start = 0;
+  //
 
   const char *p, *pe;
   int cs = parser->cs;
