@@ -102,7 +102,7 @@ namespace sylar {
             
             std::string m_threadname;     //线程名
             std::shared_ptr<Logger> m_logger;//需要写入的日志器
-            LogLevel::Level m_level;      //日志级别
+            LogLevel::Level m_level;      //事件级别
     };
 
     class LogEventWrap{
