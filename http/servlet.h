@@ -64,7 +64,13 @@ private:
     //匹配失败默认转发
     Servlet::ptr m_default;
     RWMutexType m_mutex;
+};
 
+class NotFoundServlet : public Servlet{
+public: 
+    typedef std::shared_ptr<NotFoundServlet> ptr;
+    NotFoundServlet();
+    virtual int32_t handle(HttpRequest::ptr req, HttpResponse::ptr rsp, HttpSession::ptr session) override;
 };
 
 }

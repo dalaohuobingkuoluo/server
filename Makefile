@@ -523,6 +523,33 @@ http/httpclient_parser.rl.cc.s:
 	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/httpclient_parser.rl.cc.s
 .PHONY : http/httpclient_parser.rl.cc.s
 
+http/servlet.o: http/servlet.cpp.o
+
+.PHONY : http/servlet.o
+
+# target to build an object file
+http/servlet.cpp.o:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/servlet.cpp.o
+.PHONY : http/servlet.cpp.o
+
+http/servlet.i: http/servlet.cpp.i
+
+.PHONY : http/servlet.i
+
+# target to preprocess a source file
+http/servlet.cpp.i:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/servlet.cpp.i
+.PHONY : http/servlet.cpp.i
+
+http/servlet.s: http/servlet.cpp.s
+
+.PHONY : http/servlet.s
+
+# target to generate assembly for a file
+http/servlet.cpp.s:
+	$(MAKE) -f CMakeFiles/my_sylar.dir/build.make CMakeFiles/my_sylar.dir/http/servlet.cpp.s
+.PHONY : http/servlet.cpp.s
+
 my_sylar/address.o: my_sylar/address.cpp.o
 
 .PHONY : my_sylar/address.o
@@ -1379,6 +1406,9 @@ help:
 	@echo "... http/httpclient_parser.rl.o"
 	@echo "... http/httpclient_parser.rl.i"
 	@echo "... http/httpclient_parser.rl.s"
+	@echo "... http/servlet.o"
+	@echo "... http/servlet.i"
+	@echo "... http/servlet.s"
 	@echo "... my_sylar/address.o"
 	@echo "... my_sylar/address.i"
 	@echo "... my_sylar/address.s"
