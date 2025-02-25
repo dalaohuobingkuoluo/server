@@ -15,9 +15,9 @@ uint64_t GetFiberId(){
 }
 
 void Backtrace(std::vector<std::string>& bt, int size, int skip){
-    void** array = (void**)malloc(sizeof(void*) * size);
-    size_t s = backtrace(array, size);
-    char** strings = backtrace_symbols(array, size);
+    void** array = (void**)malloc(sizeof(void*) * size);    
+    size_t s = backtrace(array, size);        //array返回程序函数调用的栈帧地址, s为实际的栈帧数
+    char** strings = backtrace_symbols(array, size);    //将栈帧地址转换为对地址的描述信息
 
     if(!strings){
         SYLAR_LOG_ERROR(g_logger) << "backtrace_symbols error";
