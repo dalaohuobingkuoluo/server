@@ -85,13 +85,13 @@ Thread::~Thread(){
 }
 
 void Thread::join(){
-    if(m_trhread){
+    if(m_thread){
         int rt = pthread_join(m_thread, nullptr);
         if(rt){
             SYLAR_LOG_ERROR(g_logger) << "thread name = " << m_name << " pthread_join fail, rt = " << rt;
             throw std::logic_error("pthread_join error");
         }
-        m_trhread = 0; 
+        m_thread = 0; 
     }
 }
 
