@@ -63,6 +63,8 @@ void* Thread::run(void* arg){
     cb();
     return 0;
 }
+//在构造函数中，线程还没有真正启动，线程的上下文还没有建立起来。只有在线程真正启动并进入 run 函数后，线程的上下文才会被正确设置。因此，在线程的 run 函数中进行初始化可以确保这些操作在正确的线程上下文中进行。
+//在 run 函数中设置线程局部存储（如 t_thread 和 t_thread_name），确保每个线程都有自己独立的存储空间。这些变量在构造函数中是无法正确设置的，因为构造函数是在主线程中执行的，而不是在新创建的线程中执行的。
     
 Thread::Thread(std::function<void()> cb, const std::string name): m_cb(cb), m_name(name) {
     if(name.empty()){
