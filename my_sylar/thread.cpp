@@ -70,7 +70,7 @@ Thread::Thread(std::function<void()> cb, const std::string name): m_cb(cb), m_na
     if(name.empty()){
         m_name = "UNKNOW";
     }
-    int rt = pthread_create(&m_trhread, nullptr, Thread::run, this);
+    int rt = pthread_create(&m_thread, nullptr, Thread::run, this);
     if(rt){
         SYLAR_LOG_ERROR(g_logger) << "thread name = " << m_name << " pthread_create fail, rt = " << rt;
         throw std::logic_error("pthread_create error");
@@ -79,14 +79,14 @@ Thread::Thread(std::function<void()> cb, const std::string name): m_cb(cb), m_na
 }
 
 Thread::~Thread(){
-    if(m_trhread){
-        pthread_detach(m_trhread);
+    if(m_thread){
+        pthread_detach(m_thread);
     }
 }
 
 void Thread::join(){
     if(m_trhread){
-        int rt = pthread_join(m_trhread, nullptr);
+        int rt = pthread_join(m_thread, nullptr);
         if(rt){
             SYLAR_LOG_ERROR(g_logger) << "thread name = " << m_name << " pthread_join fail, rt = " << rt;
             throw std::logic_error("pthread_join error");
