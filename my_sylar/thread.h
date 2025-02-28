@@ -254,7 +254,7 @@ private:
     //（可能在回调函数中要用到线程的参数信息，因此在构造函数进行参数初始化由于异步导致参数可能未初始化完成）
 
     pid_t m_id = -1;
-    pthread_t m_trhread = 0;
+    pthread_t m_thread = 0;
     std::function<void()> m_cb;
     std::string m_name;
     Semaphore m_sem;              //确保构造函数执行完之后，初始化线程参数已经完成
