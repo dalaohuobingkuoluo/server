@@ -67,7 +67,7 @@ namespace sylar{
             StackAllocator::Dealloc(m_stack, m_stacksize);
         }else {
             SYLAR_ASSERT(!m_cb);
-            SYLAR_ASSERT(m_state == EXEC);
+            SYLAR_ASSERT(m_state == EXEC);    //只有主协程没有分配独立的栈空间，并且在生命周期始终为EXEC态
             Fiber* cur = t_fiber;
             if(cur == this)
                 SetThis(nullptr);
