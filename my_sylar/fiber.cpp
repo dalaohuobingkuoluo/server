@@ -174,6 +174,8 @@ namespace sylar{
         try{
             cur->m_cb();
             cur->m_cb = nullptr;
+            //释放回调函数持有的资源，避免内存泄漏
+            //防止协程在被错误地重新调度时重复执行相同的回调函数,明确表示协程已经执行完毕，不再持有任何有效的回调函数
             cur->m_state = TERM;
         }catch(std::exception& ex){
             cur->m_state = EXCEPT;
