@@ -9,8 +9,8 @@ namespace sylar{
     static std::atomic<uint64_t> s_fiber_id{0};
     static std::atomic<uint64_t> s_fiber_count(0);
 
-    static thread_local Fiber* t_fiber = nullptr;                   //当前协程
-    static thread_local Fiber::ptr t_threadFiber = nullptr;         //Main主协程（线程的首个协程）
+    static thread_local Fiber* t_fiber = nullptr;                   //当前正在运行的协程
+    static thread_local Fiber::ptr t_threadFiber = nullptr;         //swap保存的旧协程
 
     static ConfigVar<uint32_t>::ptr g_fiber_stack_size =
             Config::Lookup("fiber.stack_size", (uint32_t)(1024 * 1024), "fiber stack size");
