@@ -137,7 +137,7 @@ namespace sylar{
         while(!stopping()){
             ft.reset();
             bool tickle_me = false;
-            bool is_active = false;    //防止协程队列取出空的回调函数
+            bool is_active = false;    //跟踪当前调度循环中是否有活跃的任务被执行
             {
                 MutexType::Lock lock(m_mutex);
                 auto it = m_fibers.begin();
@@ -200,13 +200,8 @@ namespace sylar{
                     // SYLAR_LOG_DEBUG(g_logger) << cb_fiber->getId() << " set HOLD " <<cb_fiber.use_count();
                     cb_fiber.reset();
                 }
-            }else{
-                if(is_active){     //取出空的回调函数,不执行也不陷入idle_fiber
-                    --m_activeThreadCount;
-                    continue;
-                }
+            }else{    //本轮没有提取到可以执行的活跃任务,陷入idle_fiber
                 if(idle_fiber->getState() == Fiber::TERM){
-                    --m_idleThreadCount;
                     // SYLAR_LOG_DEBUG(g_logger) << "idle fiber term";
                     break;
                 }
