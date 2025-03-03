@@ -25,9 +25,9 @@ public:
     static Scheduler* GetThis();        //返回线程局部变量当前调度器t_schedule
     static Fiber* GetMainFiber();       //返回线程局部变量t_scheduler_fiber执行协程调度的主协程
 
-    //start涉及三类协程t_threadFiber(创建调度器的主协程)、m_rootFiber(执行调度任务的协程)、FiberAndThread（具体的协程任务m_use_caller = true）
-    //协程切换逻辑：1.(Fiber::m_use_caller = true)  :  t_threadFiber <--> m_rootFiber <--> FiberAndThread
-    //             2.(Fiber::m_use_caller = false) : {t_threadFiber == m_rootFiber} <--> FiberAndThread
+    //t_threadFiber(创建的首个主协程)  <-->  t_scheduler_fiber(执行协程调度的主协程)  用于保存切换时的当前上下文
+    //调度器中协程切换逻辑：1.(Fiber::m_use_caller = true)  :  t_threadFiber  <-->  t_scheduler_fiber  <-->  FiberAndThread
+    //                     2.(Fiber::m_use_caller = false) :                         t_threadFiber    <-->  FiberAndThread
     void start();                       //创建线程池
     void stop();
 
