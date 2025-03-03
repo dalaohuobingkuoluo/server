@@ -307,10 +307,10 @@ void IOManager::idle() {
             //debug：新增定时器任务则需要额外swapout去执行否则会在idle死循环
             //（因为后续逻辑仅处理IO回调，当没有IO事件时重新循环判断stopping条件，
             //而此时Scheduler的stopping条件一直无法满足也无法跳出idle）
-            Fiber::ptr cur = Fiber::GetThis();
-            auto raw_ptr = cur.get();
-            cur.reset();
-            raw_ptr->swapOutCaller();
+            // Fiber::ptr cur = Fiber::GetThis();
+            // auto raw_ptr = cur.get();
+            // cur.reset();
+            // raw_ptr->swapOutCaller();
         }
 
         for(int i = 0; i < rt ; ++i){
@@ -362,11 +362,15 @@ void IOManager::idle() {
                     --m_pendingEventCount;
                 }
             }
-            Fiber::ptr cur = Fiber::GetThis();
-            auto raw_ptr = cur.get();
-            cur.reset();
-            raw_ptr->swapOutCaller();
+            // Fiber::ptr cur = Fiber::GetThis();
+            // auto raw_ptr = cur.get();
+            // cur.reset();
+            // raw_ptr->swapOutCaller();
         }
+        Fiber::ptr cur = Fiber::GetThis();
+        auto raw_ptr = cur.get();
+        cur.reset();
+        raw_ptr->swapOutCaller();
     }
 }
 
