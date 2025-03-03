@@ -123,7 +123,7 @@ protected:
     size_t m_threadCount = 0;
     std::atomic<size_t> m_activeThreadCount{0};         
     std::atomic<size_t> m_idleThreadCount = {0};        
-    bool m_stopping = true;                  //是否正在运行
+    bool m_stopping = false;                  //是否正在停止
     bool m_autoStop = false;                 //是否被stop方法结束
     int m_rootThreadId = 0;                   
 };
