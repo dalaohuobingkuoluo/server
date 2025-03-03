@@ -49,10 +49,9 @@ namespace sylar{
     }
 
     void Scheduler::start(){
-        if(!m_stopping){
+        if(m_stopping){
             return;
         }
-        m_stopping = false;
         {
             MutexType::Lock lock(m_mutex);
             SYLAR_ASSERT(m_threads.empty());
