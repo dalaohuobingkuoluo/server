@@ -5,7 +5,7 @@
 
 namespace sylar{
     static sylar::Logger::ptr g_logger = SYLAR_LOG_NAME("system");
-    static thread_local Scheduler* t_scheduler = nullptr;                 //当前调度器
+    static thread_local Scheduler* t_scheduler = nullptr;                 //当前调度器，用于区分当前线程是否为创建调度器的主线程，在复用主线程时用到
     static thread_local Fiber* t_scheduler_fiber = nullptr;               //执行run调度算法的调度协程
 
 
