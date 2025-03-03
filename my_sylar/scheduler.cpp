@@ -71,6 +71,7 @@ namespace sylar{
         t_scheduler = this;
     }
 
+    //在stop中真正完成调度任务
     void Scheduler::stop(){
         m_autoStop = true;
         //复用主线程并且没有创建新的线程
