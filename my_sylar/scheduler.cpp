@@ -83,10 +83,9 @@ namespace sylar{
                 return;
             }
         }
-
-        if(m_rootThreadId != -1){  //复用主线程时需在
+        //stop方法只能在创建调度器的协程中调用，而复用主线程时设置了t_scheduler
+        if(m_rootThreadId != -1){  
             SYLAR_ASSERT(GetThis() == this);
-
         }else{
             SYLAR_ASSERT(GetThis() != this);
         }
