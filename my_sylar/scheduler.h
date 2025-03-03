@@ -115,7 +115,7 @@ private:
     std::vector<Thread::ptr> m_threads;
     MutexType m_mutex;
     std::list<FiberAndThread> m_fibers;      //待执行的协程列表
-    Fiber::ptr m_rootFiber;                  //用于真正执行协程调度而创建的新协程
+    Fiber::ptr m_rootFiber;                  //use_caller=true时，调度器caller的主协程
     std::string m_name;
 
 protected:
