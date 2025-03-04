@@ -156,7 +156,7 @@ namespace sylar{
 
     void Fiber::YiledToHold(){
         Fiber::ptr cur = GetThis();
-        // cur->m_state = HOLD;
+        cur->m_state = HOLD;
         if(GetThis()->m_use_caller){
             cur->swapOutCaller();
         }else{
