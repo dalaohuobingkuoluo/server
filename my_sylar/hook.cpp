@@ -396,6 +396,7 @@ int fcntl(int fd, int cmd, ... /* arg */ ){
                     arg |= O_NONBLOCK;
                 }else{
                     arg &= ~O_NONBLOCK;
+                    //TODO:通过fcntl设置非阻塞但实际并未设置，在do_io中可能导致用户期望的非阻塞操作实际上是以阻塞方式执行的问题。
                 }
                 return fcntl_f(fd, cmd, arg);
             }
